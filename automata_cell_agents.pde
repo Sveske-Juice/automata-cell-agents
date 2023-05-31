@@ -4,7 +4,7 @@ boolean mouseInWin = true;
 boolean showDebugWin = true;
 int simSpeed = 1;
 float generationTime = 0f; // Time it takes for generation in this frame
-int seed = -1; // seed < 0: disable seed, otherwise use random seed
+int seed = -1; // if seed < 0: use random seed
 
 void setup()
 {
