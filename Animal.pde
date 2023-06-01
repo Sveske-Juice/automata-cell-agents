@@ -5,32 +5,44 @@ public abstract class Animal implements IObjectWithBounds
     protected float m_SpeedMultiplier = 1f;
     protected float m_CurrentMovementSpeed;
     protected float m_ControlMovementSpeed = 4f;
+    protected float m_MaxSpeed = 75f;
     protected float m_WanderMovementSpeed = 15f;
     protected float m_WanderRadius = 50f; // How much the radius of the wandering is
     protected float m_WanderAngleChange = 0.5f; // How many radians the angle wander angle can change every wander call
     protected float m_WanderAngle = 0f; // Determines a new position to wander towards together with the current pos
-    protected float m_WanderDirectionExtend = 10f; // How much of the animal's direction (v) will be extended when wandering
+    protected float m_WanderDirectionExtend = 100f; // How much of the animal's direction (v) will be extended when wandering
     protected boolean m_ShowWandererInfo = true;
 
     protected ZVector m_Position = new ZVector(width / 2, height / 2);
+    protected float m_Rotation = 0f;
     protected ZVector m_Velocity = new ZVector(-1, 0);
     protected ZVector m_Acceleration = new ZVector();
     protected ZVector m_HalfExtents;
-    protected float m_Mass = 10f;
+    protected float m_Mass = 3f;
 
     public void SetPostion(ZVector pos) { m_Position = pos; }
 
     public void setup() {}
 
-    public void update() {}
+    public void update()
+    {
+        // Point animal towards front of movement
+        m_Rotation = m_Velocity.copy().normalize().angle();
+    }
 
     public void display()
     {
+        pushMatrix();
+        
+        translate(getCenter().x, getCenter().y);
+        rotate(m_Rotation);
+
         fill(255,0,0);
 
         shapeMode(CENTER);
-        shape(m_Sprite, getCenter().x, getCenter().y);
-        shapeMode(CORNER);
+        shape(m_Sprite);
+
+        popMatrix();
     }
 
     /*
@@ -80,6 +92,7 @@ public abstract class Animal implements IObjectWithBounds
     protected void move()
     {
         m_Velocity = ZVector.add(m_Velocity, m_Acceleration);
+        m_Velocity.limit(m_MaxSpeed);
         m_Position = ZVector.add(m_Position, ZVector.mult(m_Velocity, Time.dt()));
 
         m_Acceleration.mult(0);

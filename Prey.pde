@@ -17,6 +17,8 @@ public class Prey extends Animal
     @Override
     public void update()
     {
+        super.update();
+        
         switch (m_State)
         {
             case WANDER:
