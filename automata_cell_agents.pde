@@ -1,5 +1,5 @@
 CellGrid m_Grid;
-ArrayList<Animal> m_Animals = new ArrayList<Animal>();
+Scene m_Scene;
 boolean m_Paused = false;
 boolean m_MouseInWin = true;
 boolean m_ShowDebugWin = true;
@@ -12,7 +12,7 @@ void setup()
   size(990, 1000);
   // frameRate(500);
   m_Grid = new CellGrid();
-  m_Animals.add(new Prey("prey test"));
+  m_Scene = new Scene();
 
   if (m_Seed < 0)
     m_Seed = int(random(0, Integer.MAX_VALUE));
@@ -30,6 +30,7 @@ void draw()
 
   if (!m_Paused)
   {
+    /* GRID LOOP. */
     int currentSimGen = 0; // How many times the m_Grid have been generated this frame
     m_GenerationTime = 0f;
     do {
@@ -38,26 +39,21 @@ void draw()
       m_GenerationTime += m_Grid.getGenTime();
 
     } while (++currentSimGen < m_SimSpeed); // Generate x number of generations this frame depending on the m_SimSpeed
-    
+
+    /* SCENE LOOP. */
+
     // After grid is generated display grid
     m_Grid.display();
 
     currentSimGen = 0; // How many times the m_Grid have been generated this frame
     do {
       // Update m_Animals
-      for (int i = 0; i < m_Animals.size(); i++)
-      {
-        // TODO give info about m_Grid
-        m_Animals.get(i).update();
-      }
+      m_Scene.update();
     } while (++currentSimGen < m_SimSpeed); // Generate x number of generations this frame depending on the m_SimSpeed
   }
 
   // Display animals on top of grid
-  for (int i = 0; i < m_Animals.size(); i++)
-  {
-    m_Animals.get(i).display();
-  }
+  m_Scene.display();
 
   // Show debug window
   if (m_ShowDebugWin)
