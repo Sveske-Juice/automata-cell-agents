@@ -1,11 +1,11 @@
-public abstract class Animal
+public abstract class Animal implements IObjectWithBounds
 {
     protected String m_Name;
     protected PShape m_Sprite;
     protected float m_SpeedMultiplier = 1f;
     protected float m_CurrentMovementSpeed;
     protected float m_ControlMovementSpeed = 4f;
-    protected float m_WanderMovementSpeed = 2f;
+    protected float m_WanderMovementSpeed = 15f;
     protected float m_WanderRadius = 50f; // How much the radius of the wandering is
     protected float m_WanderAngleChange = 0.5f; // How many radians the angle wander angle can change every wander call
     protected float m_WanderAngle = 0f; // Determines a new position to wander towards together with the current pos
@@ -17,12 +17,15 @@ public abstract class Animal
     protected ZVector m_Acceleration = new ZVector();
     protected float m_Mass = 10f;
 
+    public void SetPostion(ZVector pos) { m_Position = pos; }
+
     public abstract void update();
 
     public void display()
     {
         fill(255,0,0);
-        rect(m_Position.x, m_Position.y, 50, 50);
+        rectMode(CENTER);
+        rect(m_Position.x, m_Position.y, getHalfExtents().x*2, getHalfExtents().y*2);
     }
 
     /*

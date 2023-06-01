@@ -113,6 +113,8 @@ void showCellInfo()
 
 void showDebugWindow()
 {
+  rectMode(CORNER);
+
   int winWidth = 300;
   int windowXPos = width - winWidth;
   int winHeight = 275;
@@ -186,6 +188,7 @@ void keyPressed()
   if (key == 32 && m_Paused)
   {
     m_Grid.singleStep();
+    m_Scene.update();
   }
   else if (key == 'i')
     m_ShowDebugWin = !m_ShowDebugWin;

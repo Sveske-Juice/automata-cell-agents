@@ -21,4 +21,10 @@ public class Prey extends Animal
                 break;
         }
     }
+
+    @Override
+    public ZVector getCenter() { return m_Position; }
+
+    @Override
+    public ZVector getHalfExtents() { return new ZVector(50, 20); }
 }
