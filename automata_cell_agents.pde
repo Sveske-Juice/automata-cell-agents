@@ -28,29 +28,15 @@ void draw()
   // Validate sim speed
   if (m_SimSpeed < 1) m_SimSpeed = 1;
 
-  if (!m_Paused)
-  {
-    /* GRID LOOP. */
-    int currentSimGen = 0; // How many times the m_Grid have been generated this frame
-    m_GenerationTime = 0f;
-    do {
-      // Generate new m_Grid
-      m_Grid.generate();
-      m_GenerationTime += m_Grid.getGenTime();
+  /* GRID LOOP. */
+  gridLoop();
 
-    } while (++currentSimGen < m_SimSpeed); // Generate x number of generations this frame depending on the m_SimSpeed
 
-    /* SCENE LOOP. */
+  // After grid is generated display grid
+  m_Grid.display();
 
-    // After grid is generated display grid
-    m_Grid.display();
-
-    currentSimGen = 0; // How many times the m_Grid have been generated this frame
-    do {
-      // Update m_Animals
-      m_Scene.update();
-    } while (++currentSimGen < m_SimSpeed); // Generate x number of generations this frame depending on the m_SimSpeed
-  }
+  /* SCENE LOOP. */
+  sceneLoop();
 
   // Display animals on top of grid
   m_Scene.display();
@@ -61,6 +47,34 @@ void draw()
 
   // Show information about hovering cell
   showCellInfo();
+}
+
+void gridLoop()
+{
+  if (m_Paused)
+    return;
+  
+  
+  int currentSimGen = 0; // How many times the m_Grid have been generated this frame
+  m_GenerationTime = 0f;
+  do {
+    // Generate new m_Grid
+    m_Grid.generate();
+    m_GenerationTime += m_Grid.getGenTime();
+
+  } while (++currentSimGen < m_SimSpeed); // Generate x number of generations this frame depending on the m_SimSpeed
+}
+
+void sceneLoop()
+{
+  if (m_Paused)
+    return;
+  
+  int currentSimGen = 0; // How many times the m_Grid have been generated this frame
+  do {
+    // Update m_Animals
+    m_Scene.update();
+  } while (++currentSimGen < m_SimSpeed); // Generate x number of generations this frame depending on the m_SimSpeed 
 }
 
 void showCellInfo()
