@@ -3,25 +3,26 @@ public abstract class Animal
     protected String m_Name;
     protected PShape m_Sprite;
     protected float m_SpeedMultiplier = 1f;
-    private float m_CurrentMovementSpeed;
+    protected float m_CurrentMovementSpeed;
     protected float m_ControlMovementSpeed = 400f;
+    protected float m_WanderMovementSpeed = 2f;
     protected float m_WanderRadius = 50f; // How much the radius of the wandering is
     protected float m_WanderAngleChange = 0.5f;
     protected float m_WanderAngle = 0f;
-    protected float m_WanderDirectionExtend = 100f; // How much of the animal's direction (v) will be extended when wandering
-    protected boolean m_ShowWandererInfo = false;
+    protected float m_WanderDirectionExtend = 10f; // How much of the animal's direction (v) will be extended when wandering
+    protected boolean m_ShowWandererInfo = true;
 
-    protected ZVector m_Position;
-    protected ZVector m_Velocity;
+    protected ZVector m_Position = new ZVector(width / 2, height / 2);
+    protected ZVector m_Velocity = new ZVector(-1, 0);
+    protected ZVector m_Acceleration = new ZVector();
+    protected float m_Mass = 10f;
 
-    public void update()
-    {
-        println("updating");
-    }
+    public abstract void update();
 
     public void display()
     {
-
+        fill(255,0,0);
+        rect(m_Position.x, m_Position.y, 50, 50);
     }
 
     /*
@@ -56,6 +57,23 @@ public abstract class Animal
 
         // Apply force in new wander direction
         ZVector force = ZVector.sub(wanderedPos, m_Position).normalize().mult(m_CurrentMovementSpeed);
-        println("force: " + force);
+        addForce(force);
+        // println("force: " + force);
+        println("vel: " + m_Velocity);
+        
+        move();
+    }
+
+    protected void addForce(ZVector force)
+    {
+        m_Acceleration = ZVector.add(m_Acceleration, force.div(m_Mass));
+    }
+
+    protected void move()
+    {
+        m_Velocity = ZVector.add(m_Velocity, m_Acceleration);
+        m_Position = ZVector.add(m_Position, ZVector.mult(m_Velocity, Time.dt()));
+
+        m_Acceleration.mult(0);
     }
 }

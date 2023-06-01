@@ -37,6 +37,13 @@ void draw()
       m_Grid.generate();
       m_GenerationTime += m_Grid.getGenTime();
 
+    } while (++currentSimGen < m_SimSpeed); // Generate x number of generations this frame depending on the m_SimSpeed
+    
+    // After grid is generated display grid
+    m_Grid.display();
+
+    currentSimGen = 0; // How many times the m_Grid have been generated this frame
+    do {
       // Update m_Animals
       for (int i = 0; i < m_Animals.size(); i++)
       {
@@ -46,7 +53,11 @@ void draw()
     } while (++currentSimGen < m_SimSpeed); // Generate x number of generations this frame depending on the m_SimSpeed
   }
 
-  m_Grid.display();
+  // Display animals on top of grid
+  for (int i = 0; i < m_Animals.size(); i++)
+  {
+    m_Animals.get(i).display();
+  }
 
   // Show debug window
   if (m_ShowDebugWin)
