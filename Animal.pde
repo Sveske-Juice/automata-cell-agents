@@ -33,7 +33,7 @@ public abstract class Animal
         // Get a position scaled by 'm_WanderDirectionExtend' in the animal's movement direction
         ZVector nextPos = ZVector.add(m_Position, ZVector.mult(m_Velocity.copy().normalize(), m_WanderDirectionExtend));
 
-        // Generate polar coordinates from a circle to constrain the animals movement to it's velocity
+        // Generate polar coordinates from a circle to constrain the m_Animals movement to it's velocity
         m_WanderAngle += random(-m_WanderAngleChange, m_WanderAngleChange);
         ZVector wanderedPos = nextPos.copy();
         wanderedPos.x += m_WanderRadius * cos(m_WanderAngle); // Convert to cartesian

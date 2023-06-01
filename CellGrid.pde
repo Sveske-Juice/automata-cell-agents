@@ -5,10 +5,10 @@ class CellGrid {
   /// How many pixels each cell should fill on the screen
   private int m_CellPxSize = 50;
 
-  // Stores how many colums and rows there are in the cell grid
+  // Stores how many colums and rows there are in the cell m_Grid
   private int m_Cols, m_Rows;
 
-  // Store 2D array representing the cell grid
+  // Store 2D array representing the cell m_Grid
   private Cell[][] m_Grid;
 
   // Millis it takes for a generation to be generated
@@ -25,7 +25,7 @@ class CellGrid {
 
     m_Grid = new Cell[m_Rows][m_Cols];
 
-    // Initialize cell grid
+    // Initialize cell m_Grid
     init();
   }
 
@@ -123,7 +123,7 @@ class CellGrid {
     m_GenerationCount++;
   }
 
-  /// Display the cell grid
+  /// Display the cell m_Grid
   void display()
   {
     float startTime = millis();

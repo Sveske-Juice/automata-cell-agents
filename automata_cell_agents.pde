@@ -1,23 +1,23 @@
-CellGrid grid;
-ArrayList<Animal> animals = new ArrayList<Animal>();
-boolean paused = false;
-boolean mouseInWin = true;
-boolean showDebugWin = true;
-int simSpeed = 1;
-float generationTime = 0f; // Time it takes for generation in this frame
-int seed = -1; // if seed < 0: use random seed
+CellGrid m_Grid;
+ArrayList<Animal> m_Animals = new ArrayList<Animal>();
+boolean m_Paused = false;
+boolean m_MouseInWin = true;
+boolean m_ShowDebugWin = true;
+int m_SimSpeed = 1;
+float m_GenerationTime = 0f; // Time it takes for generation in this frame
+int m_Seed = -1; // if m_Seed < 0: use random m_Seed
 
 void setup()
 {
   size(990, 1000);
   // frameRate(500);
-  grid = new CellGrid();
-  animals.add(new Prey("prey test"));
+  m_Grid = new CellGrid();
+  m_Animals.add(new Prey("prey test"));
 
-  if (seed < 0)
-    seed = int(random(0, Integer.MAX_VALUE));
+  if (m_Seed < 0)
+    m_Seed = int(random(0, Integer.MAX_VALUE));
 
-  randomSeed(seed);
+  randomSeed(m_Seed);
 }
 
 void draw()
@@ -26,30 +26,30 @@ void draw()
   background(255);
 
   // Validate sim speed
-  if (simSpeed < 1) simSpeed = 1;
+  if (m_SimSpeed < 1) m_SimSpeed = 1;
 
-  if (!paused)
+  if (!m_Paused)
   {
-    int currentSimGen = 0; // How many times the grid have been generated this frame
-    generationTime = 0f;
+    int currentSimGen = 0; // How many times the m_Grid have been generated this frame
+    m_GenerationTime = 0f;
     do {
-      // Generate new grid
-      grid.generate();
-      generationTime += grid.getGenTime();
+      // Generate new m_Grid
+      m_Grid.generate();
+      m_GenerationTime += m_Grid.getGenTime();
 
-      // Update animals
-      for (int i = 0; i < animals.size(); i++)
+      // Update m_Animals
+      for (int i = 0; i < m_Animals.size(); i++)
       {
-        // TODO give info about grid
-        animals.get(i).update();
+        // TODO give info about m_Grid
+        m_Animals.get(i).update();
       }
-    } while (++currentSimGen < simSpeed); // Generate x number of generations this frame depending on the simspeed
+    } while (++currentSimGen < m_SimSpeed); // Generate x number of generations this frame depending on the m_SimSpeed
   }
 
-  grid.display();
+  m_Grid.display();
 
   // Show debug window
-  if (showDebugWin)
+  if (m_ShowDebugWin)
     showDebugWindow();
 
   // Show information about hovering cell
@@ -58,11 +58,11 @@ void draw()
 
 void showCellInfo()
 {
-  if (!mouseInWin)
+  if (!m_MouseInWin)
     return;
   
   // Get current hovering cell
-  Cell hoveringCell = grid.getCellAt(mouseX, mouseY);
+  Cell hoveringCell = m_Grid.getCellAt(mouseX, mouseY);
   if (hoveringCell == null)
     return;
   
@@ -119,8 +119,8 @@ void showDebugWindow()
 
   // data
   float frameTime = Time.dt();
-  float drawTime = grid.getDrawTime();
-  int genCnt = grid.getGenCount();
+  float drawTime = m_Grid.getDrawTime();
+  int genCnt = m_Grid.getGenCount();
 
   // settings
   fill(255);
@@ -132,7 +132,7 @@ void showDebugWindow()
   currentElem += elemStep;
 
   // gen time
-  text("Generate time: " + generationTime / 1000 + "s", windowXPos, currentElem);
+  text("Generate time: " + m_GenerationTime / 1000 + "s", windowXPos, currentElem);
   currentElem += elemStep;
 
   // draw time
@@ -140,15 +140,15 @@ void showDebugWindow()
   currentElem += elemStep;
 
   // simulation speed
-  text("Simulation speed: " + simSpeed + " (use up and down arrow)", windowXPos, currentElem);
+  text("Simulation speed: " + m_SimSpeed + " (use up and down arrow)", windowXPos, currentElem);
   currentElem += elemStep;
 
   // generation
   text("Generation: " + genCnt, windowXPos, currentElem);
   currentElem += elemStep;
 
-  // seed
-  text("Seed: " + seed, windowXPos, currentElem);
+  // m_Seed
+  text("m_Seed: " + m_Seed, windowXPos, currentElem);
   currentElem += elemStep;
 
   
@@ -170,30 +170,30 @@ void showDebugWindow()
 
 void mouseReleased()
 {
-  paused = !paused; 
+  m_Paused = !m_Paused; 
 }
 
 void keyPressed()
 {
-  // Single step on space down and while its paused
-  if (key == 32 && paused)
+  // Single step on space down and while its m_Paused
+  if (key == 32 && m_Paused)
   {
-    grid.singleStep();
+    m_Grid.singleStep();
   }
   else if (key == 'i')
-    showDebugWin = !showDebugWin;
+    m_ShowDebugWin = !m_ShowDebugWin;
   else if (keyCode == UP)
-    simSpeed++;
+    m_SimSpeed++;
   else if (keyCode == DOWN)
-    simSpeed--;
+    m_SimSpeed--;
 }
 
 void mouseEntered()
 {
-  mouseInWin = true;
+  m_MouseInWin = true;
 }
 
 void mouseExited()
 {
-  mouseInWin = false;
+  m_MouseInWin = false;
 }
