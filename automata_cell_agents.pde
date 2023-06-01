@@ -1,4 +1,5 @@
 CellGrid grid;
+ArrayList<Animal> animals = new ArrayList<Animal>();
 boolean paused = false;
 boolean mouseInWin = true;
 boolean showDebugWin = true;
@@ -11,6 +12,7 @@ void setup()
   size(990, 1000);
   // frameRate(500);
   grid = new CellGrid();
+  animals.add(new Prey("prey test"));
 
   if (seed < 0)
     seed = int(random(0, Integer.MAX_VALUE));
@@ -28,12 +30,20 @@ void draw()
 
   if (!paused)
   {
-    int currentSimGen = 0;
+    int currentSimGen = 0; // How many times the grid have been generated this frame
     generationTime = 0f;
     do {
+      // Generate new grid
       grid.generate();
       generationTime += grid.getGenTime();
-    } while (++currentSimGen < simSpeed);
+
+      // Update animals
+      for (int i = 0; i < animals.size(); i++)
+      {
+        // TODO give info about grid
+        animals.get(i).update();
+      }
+    } while (++currentSimGen < simSpeed); // Generate x number of generations this frame depending on the simspeed
   }
 
   grid.display();

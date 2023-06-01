@@ -1,5 +1,6 @@
 public abstract class Animal
 {
+    protected String m_Name;
     protected PShape m_Sprite;
     protected float m_SpeedMultiplier = 1f;
     private float m_CurrentMovementSpeed;
@@ -12,6 +13,11 @@ public abstract class Animal
 
     protected ZVector m_Position;
     protected ZVector m_Velocity;
+
+    public void update()
+    {
+        println("updating");
+    }
 
     public void display()
     {
