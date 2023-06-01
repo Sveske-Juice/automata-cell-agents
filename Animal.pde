@@ -4,11 +4,11 @@ public abstract class Animal
     protected PShape m_Sprite;
     protected float m_SpeedMultiplier = 1f;
     protected float m_CurrentMovementSpeed;
-    protected float m_ControlMovementSpeed = 400f;
+    protected float m_ControlMovementSpeed = 4f;
     protected float m_WanderMovementSpeed = 2f;
     protected float m_WanderRadius = 50f; // How much the radius of the wandering is
-    protected float m_WanderAngleChange = 0.5f;
-    protected float m_WanderAngle = 0f;
+    protected float m_WanderAngleChange = 0.5f; // How many radians the angle wander angle can change every wander call
+    protected float m_WanderAngle = 0f; // Determines a new position to wander towards together with the current pos
     protected float m_WanderDirectionExtend = 10f; // How much of the animal's direction (v) will be extended when wandering
     protected boolean m_ShowWandererInfo = true;
 
