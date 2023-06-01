@@ -8,6 +8,13 @@ public class Prey extends Animal
     }
 
     @Override
+    public void setup()
+    {
+        m_Sprite = loadShape("prey.svg");
+        m_HalfExtents = new ZVector(m_Sprite.width, m_Sprite.height);
+    }
+
+    @Override
     public void update()
     {
         switch (m_State)

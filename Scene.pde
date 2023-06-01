@@ -6,6 +6,15 @@ public class Scene
     public Scene()
     {
         m_Animals.add(new Prey("prey test"));
+        init();
+    }
+
+    public void init()
+    {
+        for (int i = 0; i < m_Animals.size(); i++)
+        {
+            m_Animals.get(i).setup();
+        }
     }
 
     public void update()

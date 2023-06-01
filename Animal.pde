@@ -15,17 +15,22 @@ public abstract class Animal implements IObjectWithBounds
     protected ZVector m_Position = new ZVector(width / 2, height / 2);
     protected ZVector m_Velocity = new ZVector(-1, 0);
     protected ZVector m_Acceleration = new ZVector();
+    protected ZVector m_HalfExtents;
     protected float m_Mass = 10f;
 
     public void SetPostion(ZVector pos) { m_Position = pos; }
 
-    public abstract void update();
+    public void setup() {}
+
+    public void update() {}
 
     public void display()
     {
         fill(255,0,0);
-        rectMode(CENTER);
-        rect(m_Position.x, m_Position.y, getHalfExtents().x*2, getHalfExtents().y*2);
+
+        shapeMode(CENTER);
+        shape(m_Sprite, getCenter().x, getCenter().y);
+        shapeMode(CORNER);
     }
 
     /*
@@ -62,7 +67,7 @@ public abstract class Animal implements IObjectWithBounds
         ZVector force = ZVector.sub(wanderedPos, m_Position).normalize().mult(m_CurrentMovementSpeed);
         addForce(force);
         // println("force: " + force);
-        println("vel: " + m_Velocity);
+        // println("vel: " + m_Velocity);
         
         move();
     }
