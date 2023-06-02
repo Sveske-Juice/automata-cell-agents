@@ -1,6 +1,7 @@
 // Credit: Zhentao
 
 import java.lang.Math;
+import java.util.ArrayList;
 
 public class ZVector
 {
@@ -244,5 +245,22 @@ public class ZVector
     public static float heading(ZVector vec)
     {
         return (float) (360 - (((Math.atan2(vec.x, vec.y) * (180 / Math.PI)) + 90) % 360));
+    }
+
+    public static ZVector getShortest(ArrayList<ZVector> vectors)
+    {
+        ZVector shortest = null;
+        float shortestMag = Float.MAX_VALUE;
+
+        for (int i = 0; i < vectors.size(); i++)
+        {
+            float mag = vectors.get(i).mag();
+            if (mag < shortestMag)
+            {
+                shortest = vectors.get(i);
+                shortestMag = mag;
+            }
+        }
+        return shortest;
     }
 }
