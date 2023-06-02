@@ -3,6 +3,7 @@ public abstract class Animal implements IObjectWithBounds
     protected Scene m_GameScene;
     protected String m_Name;
     protected PShape m_Sprite;
+    protected PShape m_DamageEffect;
     protected float m_SpeedMultiplier = 1f;
     protected float m_CurrentMovementSpeed;
     protected float m_ControlMovementSpeed = 4f;
@@ -21,6 +22,14 @@ public abstract class Animal implements IObjectWithBounds
     protected ZVector m_HalfExtents;
     protected float m_Mass = 3f;
 
+    protected float m_Health = 100f;
+
+    protected float m_IFrameDelay = 1f;
+    protected float m_CurrentIFrameDuration = 0f;
+    protected boolean m_HasIFrame = false;
+
+    protected float m_FireDamage = 20f;
+
     protected Cell m_StandingOnCell;
 
     public void SetCellStandingOn(Cell cell) { m_StandingOnCell = cell; }
@@ -29,7 +38,10 @@ public abstract class Animal implements IObjectWithBounds
     public ZVector GetPosition() { return m_Position; }
     public void SetPostion(ZVector pos) { m_Position = pos; }
 
-    public void setup() {}
+    public void setup()
+    {
+        m_DamageEffect = loadShape("damage_effect.svg");
+    }
 
     public void update()
     {
@@ -38,8 +50,19 @@ public abstract class Animal implements IObjectWithBounds
 
         if (m_StandingOnCell != null) {
             if (m_StandingOnCell.getCellType() == CellType.FIRE)
-                m_GameScene.DestroyAnimal(this);
+                takeDamage(m_FireDamage);
         }
+
+        if (m_HasIFrame)
+        {
+            m_CurrentIFrameDuration += Time.dt();
+            if (m_CurrentIFrameDuration >= m_IFrameDelay)
+            {
+                m_HasIFrame = false;
+                m_CurrentIFrameDuration = 0f;
+            }
+        }
+        println("hp: " + m_Health);
     }
 
     public void display()
@@ -49,10 +72,12 @@ public abstract class Animal implements IObjectWithBounds
         translate(getCenter().x, getCenter().y);
         rotate(m_Rotation);
 
-        fill(255,0,0);
-
         shapeMode(CENTER);
+
         shape(m_Sprite);
+
+        if (m_HasIFrame)
+            shape(m_DamageEffect);
 
         popMatrix();
     }
@@ -108,5 +133,19 @@ public abstract class Animal implements IObjectWithBounds
         m_Position = ZVector.add(m_Position, ZVector.mult(m_Velocity, Time.dt()));
 
         m_Acceleration.mult(0);
+    }
+
+    protected void takeDamage(float amt)
+    {
+        if (m_HasIFrame)
+            return;
+
+        m_Health -= amt;
+        if (m_Health <= 0f)
+        {
+            m_GameScene.DestroyAnimal(this);
+        }
+
+        m_HasIFrame = true;
     }
 }
