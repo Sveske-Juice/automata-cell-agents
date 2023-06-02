@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="7.707685mm"
-   height="9.475297mm"
-   viewBox="0 0 7.7076848 9.4752973"
+   width="12.724447mm"
+   height="17.691631mm"
+   viewBox="0 0 12.724447 17.691632"
    version="1.1"
    id="svg7649"
    sodipodi:docname="damage_effect.svg"
@@ -27,21 +27,21 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="14.592017"
-     inkscape:cx="7.7439601"
-     inkscape:cy="33.956922"
+     inkscape:zoom="5.1590571"
+     inkscape:cx="98.079938"
+     inkscape:cy="28.590496"
      inkscape:window-width="3840"
-     inkscape:window-height="2051"
+     inkscape:window-height="2065"
      inkscape:window-x="1920"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="svg7649" />
   <defs
      id="defs7646" />
   <g
      inkscape:label="Layer 1"
      id="layer1"
-     transform="translate(-55.711403,-72.122699)">
+     transform="matrix(1.6508777,0,0,1.867132,-91.972713,-134.6626)">
     <path
        id="path353"
        style="fill:#d80000;stroke:#000000;stroke-width:0.0794839"
