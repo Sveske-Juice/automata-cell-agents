@@ -144,6 +144,7 @@ void showCellInfo(Cell hoveringCell)
 void showAnimalInfo(Animal hoveringAnimal)
 {
   String animalName = hoveringAnimal.getName();
+  float animalHealth = hoveringAnimal.getHealth();
 
   // Create info window
   int elemStep = 25; // padding
@@ -174,9 +175,9 @@ void showAnimalInfo(Animal hoveringAnimal)
   text(animalName, windowXPos, currentElem);
   currentElem += elemStep;
 
-  // depth 
+  // health
   textSize(14);
-  // text("Neighbour search depth: " + cellDepth, windowXPos, currentElem);
+  text("HP: " + animalHealth, windowXPos, currentElem);
   currentElem += elemStep;
 }
 
