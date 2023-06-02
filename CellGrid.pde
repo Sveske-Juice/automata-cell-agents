@@ -54,6 +54,7 @@ class CellGrid {
     m_Grid[row][col] = cell;
   }
 
+  // Translates world/pixel position to index into the cell grid
   public ZVector translateWP2Idx(ZVector WP)
   {
     return new ZVector((int) WP.y / m_CellPxSize, (int) WP.x / m_CellPxSize);
@@ -135,6 +136,7 @@ class CellGrid {
     generate();
   }
 
+  // Gets a hashmap which maps a quantity of cells to a specific cell type from a center position and a depth from that center
   HashMap<CellType, Integer> getNeighbours(int row, int col, int depth)
   {
     HashMap<CellType, Integer> neighbours = new HashMap<CellType, Integer>();
@@ -164,6 +166,7 @@ class CellGrid {
     return neighbours;
   }
 
+  // Gets a list tuples which map cell types to the idx position of that celltype in a search area.
   ArrayList<Tuple<CellType, ZVector>> getNeighbourLocations(int row, int col, int depth)
   {
     ArrayList<Tuple<CellType, ZVector>> neighbours = new ArrayList<Tuple<CellType, ZVector>>();
