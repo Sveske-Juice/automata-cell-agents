@@ -37,7 +37,7 @@ public abstract class Animal implements IObjectWithBounds
         m_Rotation = m_Velocity.copy().normalize().angle();
 
         if (m_StandingOnCell != null) {
-            if (m_StandingOnCell.getCellName() == "Fire Cell")
+            if (m_StandingOnCell.getCellType() == CellType.FIRE)
                 m_GameScene.DestroyAnimal(this);
         }
     }
