@@ -36,7 +36,10 @@ public abstract class Animal implements IObjectWithBounds
         // Point animal towards front of movement
         m_Rotation = m_Velocity.copy().normalize().angle();
 
-
+        if (m_StandingOnCell != null) {
+            if (m_StandingOnCell.getCellName() == "Fire Cell")
+                m_GameScene.DestroyAnimal(this);
+        }
     }
 
     public void display()
