@@ -88,4 +88,37 @@ public class Scene
     {
         m_Animals2Destroy.add(animal); // add animal to destruction queue
     }
+
+    // Does a simple point overlap to see if any animals are at (xPos, yPos)
+    public Animal getAnimalAt(int xPos, int yPos)
+    {
+        for (int i = 0; i < m_Animals.size(); i++)
+        {
+            if (pointOverlap(xPos, yPos, (IObjectWithBounds) m_Animals.get(i)))
+                return m_Animals.get(i);
+        }
+        return null;
+    }
+
+    // Simple point vs AABB
+    public boolean pointOverlap(int xPos, int yPos, IObjectWithBounds bounds)
+    {
+        ZVector point = new ZVector(xPos, yPos);
+        ZVector center = bounds.getCenter();
+        ZVector halfExtents = bounds.getHalfExtents();
+
+        if (point.x < center.x - halfExtents.x)
+            return false;
+        
+        if (point.x > center.x + halfExtents.x)
+            return false;
+
+        if (point.y < center.y - halfExtents.y)
+            return false;
+
+        if (point.y > center.y + halfExtents.y)
+            return false;
+        
+        return true;
+    }
 }

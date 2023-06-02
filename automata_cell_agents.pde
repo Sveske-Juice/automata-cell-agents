@@ -46,7 +46,7 @@ void draw()
     showDebugWindow();
 
   // Show information about hovering cell
-  showCellInfo();
+  showHoverInfo();
 }
 
 void gridLoop()
@@ -77,16 +77,32 @@ void sceneLoop()
   } while (++currentSimGen < m_SimSpeed); // Generate x number of generations this frame depending on the m_SimSpeed 
 }
 
-void showCellInfo()
+void showHoverInfo()
 {
   if (!m_MouseInWin)
     return;
   
   // Get current hovering cell
   Cell hoveringCell = m_Grid.getCellAt(mouseX, mouseY);
-  if (hoveringCell == null)
-    return;
   
+  // Get current hovering animal
+  Animal hoveringAnimal = m_Scene.getAnimalAt(mouseX, mouseY);
+
+  // TODO improvement could be to abstract everything that info can be showed about into an interface
+
+  // Decide if animal info or cell info display should be showed
+  if (hoveringAnimal != null)
+  {
+    showAnimalInfo(hoveringAnimal);
+  }
+  else if (hoveringCell != null)
+  {
+    showCellInfo(hoveringCell);
+  }
+}
+
+void showCellInfo(Cell hoveringCell)
+{
   String cellName = hoveringCell.getCellName();
   int cellDepth = hoveringCell.getNeightbourDepth();
 
@@ -122,6 +138,45 @@ void showCellInfo()
   // depth 
   textSize(14);
   text("Neighbour search depth: " + cellDepth, windowXPos, currentElem);
+  currentElem += elemStep;
+}
+
+void showAnimalInfo(Animal hoveringAnimal)
+{
+  String animalName = hoveringAnimal.getName();
+
+  // Create info window
+  int elemStep = 25; // padding
+  int windowXPos = mouseX + 25; // move so cursor is not blocking view
+  int windowYPos = mouseY;
+
+  int winWidth = width / 5;
+  int winHeight = height / 7;
+
+  // If window will be out of window border, reposition the window pos
+  if (windowXPos + winWidth > width)
+    windowXPos = mouseX - winWidth;
+  
+  if (windowYPos + winHeight > height)
+    windowYPos = mouseY - winHeight;
+
+  int currentElem = windowYPos + 5; // start pos
+
+  // background
+  fill(25, 25, 25);
+  rect(windowXPos, windowYPos, winWidth, winHeight);
+
+  fill(255);
+  textAlign(LEFT, TOP);
+
+  // animal name
+  textSize(24);
+  text(animalName, windowXPos, currentElem);
+  currentElem += elemStep;
+
+  // depth 
+  textSize(14);
+  // text("Neighbour search depth: " + cellDepth, windowXPos, currentElem);
   currentElem += elemStep;
 }
 

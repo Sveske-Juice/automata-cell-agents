@@ -32,11 +32,13 @@ public abstract class Animal implements IObjectWithBounds
 
     protected Cell m_StandingOnCell;
 
+    public ZVector GetPosition() { return m_Position; }
+    public String getName() { return m_Name; }
+
+    public void SetPostion(ZVector pos) { m_Position = pos; }
     public void SetCellStandingOn(Cell cell) { m_StandingOnCell = cell; }
     public void SetGameScene(Scene scene) { m_GameScene = scene; }
 
-    public ZVector GetPosition() { return m_Position; }
-    public void SetPostion(ZVector pos) { m_Position = pos; }
 
     public void setup()
     {
