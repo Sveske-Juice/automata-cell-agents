@@ -6,6 +6,8 @@ public class Scene
     private ArrayList<Animal> m_Animals2Destroy = new ArrayList<Animal>();
     private float m_ScreenWrappingEpsilon = 1f;
 
+    public CellGrid getGrid() { return m_Grid; }
+
     public Scene(CellGrid grid)
     {
         m_Grid = grid;

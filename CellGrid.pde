@@ -42,6 +42,18 @@ class CellGrid {
     return m_Grid[row][col];
   }
 
+  public void setCellAt(Cell cell, int xPos, int yPos)
+  {
+    // colums is y cords and rows is x cords
+    int row = yPos / m_CellPxSize;
+    int col = xPos / m_CellPxSize;
+
+    if (row >= m_Rows || col >= m_Cols)
+      return;
+
+    m_Grid[row][col] = cell;
+  }
+
   float getGenTime() { return m_GenerationTime; }
   float getDrawTime() { return m_DrawTime; }
   int getGenCount() { return m_GenerationCount; }

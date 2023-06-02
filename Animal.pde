@@ -24,7 +24,7 @@ public abstract class Animal implements IObjectWithBounds
 
     protected float m_Health = 100f;
 
-    protected float m_IFrameDelay = 1f;
+    protected float m_IFrameDelay = 0.5f;
     protected float m_CurrentIFrameDuration = 0f;
     protected boolean m_HasIFrame = false;
 
@@ -62,7 +62,6 @@ public abstract class Animal implements IObjectWithBounds
                 m_CurrentIFrameDuration = 0f;
             }
         }
-        println("hp: " + m_Health);
     }
 
     public void display()
