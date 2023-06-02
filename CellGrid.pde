@@ -54,6 +54,11 @@ class CellGrid {
     m_Grid[row][col] = cell;
   }
 
+  public ZVector translateWP2Idx(ZVector WP)
+  {
+    return new ZVector((int) WP.y / m_CellPxSize, (int) WP.x / m_CellPxSize);
+  }
+
   float getGenTime() { return m_GenerationTime; }
   float getDrawTime() { return m_DrawTime; }
   int getGenCount() { return m_GenerationCount; }
@@ -88,32 +93,7 @@ class CellGrid {
       {
         Cell currentCell = m_Grid[row][col];
         int depth = currentCell.getNeightbourDepth();
-        HashMap<CellType, Integer> neighbours = new HashMap<CellType, Integer>();
-
-        // Generate hashmap that maps cell types to the amount of those spotted as neighbours
-        for (int i = -depth; i <= depth; i++)
-        {
-          for (int j = -depth; j <= depth; j++)
-          {
-            int neighbourRow = i + row;
-            int neighbourCol = j + col;
-
-            if (neighbourRow < 0 || neighbourRow >= m_Rows)
-              continue;
-
-            if (neighbourCol < 0 || neighbourCol >= m_Cols)
-              continue;
-
-            
-            Cell cell = m_Grid[neighbourRow][neighbourCol];
-            Integer qauntity = neighbours.get(cell.getCellType());
-
-            if (qauntity != null)
-              neighbours.put(cell.getCellType(), ++qauntity);
-            else
-              neighbours.put(cell.getCellType(), 1);
-          }
-        }
+        HashMap<CellType, Integer> neighbours = getNeighbours(row, col, depth);
 
         // Subtract cell's own value from neighbours
         int quantity = neighbours.get(m_Grid[row][col].getCellType());
@@ -153,5 +133,60 @@ class CellGrid {
   void singleStep()
   {
     generate();
+  }
+
+  HashMap<CellType, Integer> getNeighbours(int row, int col, int depth)
+  {
+    HashMap<CellType, Integer> neighbours = new HashMap<CellType, Integer>();
+    // Generate hashmap that maps cell types to the amount of those spotted as neighbours
+    for (int i = -depth; i <= depth; i++)
+    {
+      for (int j = -depth; j <= depth; j++)
+      {
+        int neighbourRow = i + row;
+        int neighbourCol = j + col;
+
+        if (neighbourRow < 0 || neighbourRow >= m_Rows)
+          continue;
+
+        if (neighbourCol < 0 || neighbourCol >= m_Cols)
+          continue;
+        
+        Cell cell = m_Grid[neighbourRow][neighbourCol];
+        Integer qauntity = neighbours.get(cell.getCellType());
+
+        if (qauntity != null)
+          neighbours.put(cell.getCellType(), ++qauntity);
+        else
+          neighbours.put(cell.getCellType(), 1);
+      }
+    }
+    return neighbours;
+  }
+
+  ArrayList<Tuple<CellType, ZVector>> getNeighbourLocations(int row, int col, int depth)
+  {
+    ArrayList<Tuple<CellType, ZVector>> neighbours = new ArrayList<Tuple<CellType, ZVector>>();
+
+    // Generate hashmap that maps cell types to the amount of those spotted as neighbours
+    for (int i = -depth; i <= depth; i++)
+    {
+      for (int j = -depth; j <= depth; j++)
+      {
+        int neighbourRow = i + row;
+        int neighbourCol = j + col;
+
+        if (neighbourRow < 0 || neighbourRow >= m_Rows)
+          continue;
+
+        if (neighbourCol < 0 || neighbourCol >= m_Cols)
+          continue;
+        
+        Cell cell = m_Grid[neighbourRow][neighbourCol];
+
+        neighbours.add(new Tuple<CellType, ZVector>(cell.getCellType(), new ZVector(neighbourRow, neighbourCol)));
+      }
+    }
+    return neighbours;
   }
 }

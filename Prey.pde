@@ -5,6 +5,7 @@ public class Prey extends Animal
     private float m_NutritionMax = 100f;
     private float m_NutritionGainFromApple = 40f;
     private float m_NutritionLossPrSecond = 2f;
+    private int m_SeachRadius = 5;
 
     public Prey(String name)
     {
@@ -25,6 +26,23 @@ public class Prey extends Animal
     public void update()
     {
         super.update();
+
+        ZVector translatedPos = m_GameScene.getGrid().translateWP2Idx(m_Position);
+
+        // Get a vector to every cell type in a radius of m_SeachRadius
+        ArrayList<Tuple<CellType, ZVector>> neigbours = m_GameScene.getGrid().getNeighbourLocations((int) translatedPos.x, (int) translatedPos.y, m_SeachRadius);
+        ArrayList<ZVector> apples = new ArrayList<ZVector>();
+
+        // Filter for all the apples
+        for (int i = 0; i < neigbours.size(); i++)
+        {
+            if (neigbours.get(i).x == CellType.APPLE)
+                apples.add(neigbours.get(i).y);
+        }
+
+        // Find the closest apple
+        ZVector closest = ZVector.getShortest(apples);
+        println(closest);
         
         subNutrition(m_NutritionLossPrSecond * Time.dt());
 
@@ -36,8 +54,6 @@ public class Prey extends Animal
                 m_Scene.getGrid().setCellAt(new GrassCell(), (int) getCenter().x, (int) getCenter().y);
             }
         }
-
-        println("nut: " + m_Nutrition);
 
         switch (m_State)
         {

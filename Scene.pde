@@ -28,7 +28,6 @@ public class Scene
     {
         for (int i = 0; i < m_Animals.size(); i++)
         {
-            // TODO give info about m_Grid
             Animal animal = m_Animals.get(i);
             animal.SetCellStandingOn(m_Grid.getCellAt((int) animal.GetPosition().x, (int) animal.GetPosition().y));
             animal.update();
