@@ -6,5 +6,6 @@ public enum CellType
     FIRE,
     ASH,
     WATER,
-    OBSIDIAN
+    OBSIDIAN,
+    APPLE,
 }
