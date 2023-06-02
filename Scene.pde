@@ -1,11 +1,14 @@
 public class Scene
 {
+    private CellGrid m_Grid;
+
     private ArrayList<Animal> m_Animals = new ArrayList<Animal>();
     private ArrayList<Animal> m_Animals2Destroy = new ArrayList<Animal>();
     private float m_ScreenWrappingEpsilon = 1f;
 
-    public Scene()
+    public Scene(CellGrid grid)
     {
+        m_Grid = grid;
         m_Animals.add(new Prey("prey test"));
         init();
     }
@@ -24,7 +27,9 @@ public class Scene
         for (int i = 0; i < m_Animals.size(); i++)
         {
             // TODO give info about m_Grid
-            m_Animals.get(i).update();
+            Animal animal = m_Animals.get(i);
+            animal.SetCellStandingOn(m_Grid.getCellAt((int) animal.GetPosition().x, (int) animal.GetPosition().y));
+            animal.update();
         }
 
         keepAnimalsWithinBounds();

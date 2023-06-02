@@ -30,7 +30,7 @@ class CellGrid {
   }
 
   /// Translates the pixel coordinates to array indices and return the cell. If its out of bounds return null
-  Cell getCellAt(int xPos, int yPos)
+  public Cell getCellAt(int xPos, int yPos)
   {
     // colums is y cords and rows is x cords
     int row = yPos / m_CellPxSize;

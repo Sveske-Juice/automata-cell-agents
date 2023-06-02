@@ -12,7 +12,7 @@ void setup()
   size(990, 1000);
   // frameRate(500);
   m_Grid = new CellGrid();
-  m_Scene = new Scene();
+  m_Scene = new Scene(m_Grid);
 
   if (m_Seed < 0)
     m_Seed = int(random(0, Integer.MAX_VALUE));

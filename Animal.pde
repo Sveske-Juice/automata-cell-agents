@@ -21,7 +21,12 @@ public abstract class Animal implements IObjectWithBounds
     protected ZVector m_HalfExtents;
     protected float m_Mass = 3f;
 
+    protected Cell m_StandingOnCell;
+
+    public void SetCellStandingOn(Cell cell) { m_StandingOnCell = cell; }
     public void SetGameScene(Scene scene) { m_GameScene = scene; }
+
+    public ZVector GetPosition() { return m_Position; }
     public void SetPostion(ZVector pos) { m_Position = pos; }
 
     public void setup() {}
@@ -30,6 +35,8 @@ public abstract class Animal implements IObjectWithBounds
     {
         // Point animal towards front of movement
         m_Rotation = m_Velocity.copy().normalize().angle();
+
+
     }
 
     public void display()
