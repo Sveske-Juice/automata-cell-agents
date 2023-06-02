@@ -1,5 +1,6 @@
 public abstract class Animal implements IObjectWithBounds
 {
+    protected Scene m_GameScene;
     protected String m_Name;
     protected PShape m_Sprite;
     protected float m_SpeedMultiplier = 1f;
@@ -20,6 +21,7 @@ public abstract class Animal implements IObjectWithBounds
     protected ZVector m_HalfExtents;
     protected float m_Mass = 3f;
 
+    public void SetGameScene(Scene scene) { m_GameScene = scene; }
     public void SetPostion(ZVector pos) { m_Position = pos; }
 
     public void setup() {}

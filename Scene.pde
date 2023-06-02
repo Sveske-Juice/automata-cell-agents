@@ -1,6 +1,7 @@
 public class Scene
 {
     private ArrayList<Animal> m_Animals = new ArrayList<Animal>();
+    private ArrayList<Animal> m_Animals2Destroy = new ArrayList<Animal>();
     private float m_ScreenWrappingEpsilon = 1f;
 
     public Scene()
@@ -13,6 +14,7 @@ public class Scene
     {
         for (int i = 0; i < m_Animals.size(); i++)
         {
+            m_Animals.get(i).SetGameScene(this);
             m_Animals.get(i).setup();
         }
     }
@@ -26,6 +28,13 @@ public class Scene
         }
 
         keepAnimalsWithinBounds();
+
+        for (int i = 0; i < m_Animals2Destroy.size(); i++)
+        {
+            m_Animals.remove(m_Animals2Destroy.get(i));
+        }
+
+        m_Animals2Destroy.clear();
     }
 
     public void display()
@@ -67,5 +76,10 @@ public class Scene
                 animal.SetPostion(new ZVector(halfExtents.x + m_ScreenWrappingEpsilon, center.y));
             }
         }
+    }
+
+    public void DestroyAnimal(Animal animal)
+    {
+        m_Animals2Destroy.add(animal); // add animal to destruction queue
     }
 }
