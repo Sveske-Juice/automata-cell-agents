@@ -21,6 +21,15 @@ public class GrassCell extends Cell
             }
         }
 
+        Integer grassQuantity = neighbours.get(CellType.GRASS);
+        if (grassQuantity != null)
+        {
+            if (grassQuantity > 7)
+            {
+                return int(random(0, 2500)) == 0 ? new AppleCell() : null;
+            }
+        }
+
         if (m_LifeTime > 500)
         {
             Integer waterQuantity = neighbours.get(CellType.WATER);
