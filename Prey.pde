@@ -6,6 +6,7 @@ public class Prey extends Animal
     private float m_NutritionGainFromApple = 40f;
     private float m_NutritionLossPrSecond = 2f;
     private int m_SeachRadius = 5;
+    private boolean m_ShowChaseFoodInfo = true;
 
     public Prey(String name)
     {
@@ -40,9 +41,19 @@ public class Prey extends Animal
                 apples.add(neigbours.get(i).y);
         }
 
-        // Find the closest apple
-        ZVector closest = ZVector.getShortest(apples);
-        println(closest);
+        // Find the dir vector towards closest apple
+        ZVector appleIdxPos = ZVector.getShortest(apples);
+        ZVector applePos = new ZVector();
+        
+        if (appleIdxPos != null)
+        {
+            applePos = m_GameScene.getGrid().getWPCenterOfCell(m_GameScene.getGrid().translateIdx2WP(appleIdxPos));
+            m_State = PreyState.CHASE_FOOD;
+        }
+        else
+        {
+            m_State = PreyState.WANDER;
+        }
         
         subNutrition(m_NutritionLossPrSecond * Time.dt());
 
@@ -60,6 +71,13 @@ public class Prey extends Animal
             case WANDER:
                 m_CurrentMovementSpeed = m_WanderMovementSpeed;
                 wander();
+                break;
+            
+            case CHASE_FOOD:
+                if (m_ShowChaseFoodInfo)
+                    line(m_Position.x, m_Position.y, applePos.x, applePos.y);
+    
+                seek(applePos);
                 break;
 
             default:

@@ -112,10 +112,13 @@ public abstract class Animal implements IObjectWithBounds
         }
 
         // Apply force in new wander direction
-        ZVector force = ZVector.sub(wanderedPos, m_Position).normalize().mult(m_CurrentMovementSpeed);
+        seek(wanderedPos);
+    }
+
+    protected void seek(ZVector pos)
+    {
+        ZVector force = ZVector.sub(pos, m_Position).normalize().mult(m_CurrentMovementSpeed);
         addForce(force);
-        // println("force: " + force);
-        // println("vel: " + m_Velocity);
         
         move();
     }

@@ -60,6 +60,17 @@ class CellGrid {
     return new ZVector((int) WP.y / m_CellPxSize, (int) WP.x / m_CellPxSize);
   }
 
+  // Translates idx postiion to world/pixel position. inverse of translateWP2Idx.
+  public ZVector translateIdx2WP(ZVector Idx)
+  {
+    return new ZVector(Idx.y * m_CellPxSize, Idx.x * m_CellPxSize);
+  }
+
+  public ZVector getWPCenterOfCell(ZVector cellWPPosition)
+  {
+    return cellWPPosition.add(new ZVector(m_CellPxSize / 2, m_CellPxSize / 2));
+  }
+
   float getGenTime() { return m_GenerationTime; }
   float getDrawTime() { return m_DrawTime; }
   int getGenCount() { return m_GenerationCount; }
