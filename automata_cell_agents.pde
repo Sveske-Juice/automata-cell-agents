@@ -211,7 +211,7 @@ void showDebugWindow()
 
   int winWidth = 300;
   int windowXPos = width - winWidth;
-  int winHeight = 275;
+  int winHeight = 325;
   int windowYPos = 0;
   
   int elemStep = 25; // padding
@@ -242,6 +242,14 @@ void showDebugWindow()
   text("Draw time: " + drawTime / 1000 + "s", windowXPos, currentElem);
   currentElem += elemStep;
 
+  // scene update time
+  text("Scene tick time: " + m_Scene.GetUpdateTime() / 1000 + "s", windowXPos, currentElem);
+  currentElem += elemStep;
+
+  // scene draw time 
+  text("Scene draw time: " + m_Scene.GetDisplayTime() / 1000 + "s", windowXPos, currentElem);
+  currentElem += elemStep;
+
   // simulation speed
   text("Simulation speed: " + m_SimSpeed + " (use up and down arrow)", windowXPos, currentElem);
   currentElem += elemStep;
@@ -254,6 +262,9 @@ void showDebugWindow()
   text("m_Seed: " + m_Seed, windowXPos, currentElem);
   currentElem += elemStep;
 
+  // animals in scene / max animals
+  text("Animals in scene: " + m_Scene.GetAnimalsInScene() + " / " + m_Scene.GetMaxAnimalsInScene(), windowXPos, currentElem);
+  currentElem += elemStep;
   
 
   fill(220, 140, 25);

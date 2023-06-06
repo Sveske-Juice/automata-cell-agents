@@ -7,9 +7,16 @@ public class Scene
     private float m_ScreenWrappingEpsilon = 1f;
     private boolean m_SimStarted = false; // true after init() is called (the sim is started)
     private int m_AnimalsInScene = 0;
-    private int m_MaxAnimalsInScene = 10;
+    private int m_MaxAnimalsInScene = 15;
+    private float m_UpdateTime = 0f;
+    private float m_DisplayTime = 0f;
 
     public CellGrid getGrid() { return m_Grid; }
+
+    public int GetAnimalsInScene() { return m_AnimalsInScene; }
+    public int GetMaxAnimalsInScene() { return m_MaxAnimalsInScene; }
+    public float GetUpdateTime() { return m_UpdateTime; }
+    public float GetDisplayTime() { return m_DisplayTime; }
 
     public Scene(CellGrid grid)
     {
@@ -31,6 +38,7 @@ public class Scene
 
     public void update()
     {
+        float start = millis();
         for (int i = 0; i < m_Animals.size(); i++)
         {
             Animal animal = m_Animals.get(i);
@@ -46,14 +54,18 @@ public class Scene
         }
 
         m_Animals2Destroy.clear();
+        m_UpdateTime = millis() - start;
     }
 
     public void display()
     {
+        float start = millis();
         for (int i = 0; i < m_Animals.size(); i++)
         {
             m_Animals.get(i).display();
         }
+
+        m_DisplayTime = millis() - start;
     }
 
     private void keepAnimalsWithinBounds()

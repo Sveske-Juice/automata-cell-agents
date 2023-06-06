@@ -18,7 +18,7 @@ public abstract class Animal implements IObjectWithBounds
 
     protected ZVector m_Position = new ZVector(width / 2, height / 2);
     protected float m_Rotation = 0f;
-    protected ZVector m_Velocity = new ZVector(-1, 0);
+    protected ZVector m_Velocity = new ZVector(-100, 0);
     protected ZVector m_Acceleration = new ZVector();
     protected ZVector m_HalfExtents;
     protected float m_Mass = 3f;
