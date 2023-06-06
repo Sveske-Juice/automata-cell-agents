@@ -12,6 +12,8 @@ public class Prey extends Animal
     private int m_SeachRadius = 4;
     private boolean m_ShowChaseFoodInfo = false;
     private boolean m_ShowSearchRadius = false;
+    private boolean m_ShowFoodPoints = false;
+    private boolean m_ShowRayToFood = false;
 
     public PreyState getState() { return m_State; }
     public float getNutrition() { return m_Nutrition; }
@@ -35,19 +37,23 @@ public class Prey extends Animal
     @Override
     public void enableDebug()
     {
-      super.enableDebug();
+        super.enableDebug();
 
-      m_ShowSearchRadius = true;
-      m_ShowChaseFoodInfo = true;
+        m_ShowSearchRadius = true;
+        m_ShowChaseFoodInfo = true;
+        m_ShowFoodPoints = true;
+        m_ShowRayToFood = true;
     }
 
     @Override
     public void disableDebug()
     {
-      super.disableDebug();
+        super.disableDebug();
 
-      m_ShowSearchRadius = false;
-      m_ShowChaseFoodInfo = false;
+        m_ShowSearchRadius = false;
+        m_ShowChaseFoodInfo = false;
+        m_ShowFoodPoints = false;
+        m_ShowRayToFood = false;
     }
 
     @Override
@@ -83,8 +89,11 @@ public class Prey extends Animal
 
             translatedAppleWSPos.add(appleWSPos);
 
-            line(m_Position.x, m_Position.y, appleWSPos.x, appleWSPos.y);
-            circle(appleWSPos.x, appleWSPos.y, 15);
+            if (m_ShowRayToFood)
+                line(m_Position.x, m_Position.y, appleWSPos.x, appleWSPos.y);
+            
+            if (m_ShowFoodPoints)
+                circle(appleWSPos.x, appleWSPos.y, 15);
         }
 
         // Find the shortest path to an apple
