@@ -263,4 +263,22 @@ public class ZVector
         }
         return shortest;
     }
+
+    public static ZVector getClosest(ZVector center, ArrayList<ZVector> vectors)
+    {
+        ZVector closest = null;
+        float closestMag = Float.MAX_VALUE;
+
+        for (int i = 0; i < vectors.size(); i++)
+        {
+            float mag = ZVector.sub(center, vectors.get(i)).mag();
+            if (mag < closestMag)
+            {
+                closestMag = mag;
+                closest = vectors.get(i);
+            }
+        }
+        
+        return closest;
+    }
 }

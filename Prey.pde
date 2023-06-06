@@ -58,25 +58,40 @@ public class Prey extends Animal
         handleSplitting();
 
         ZVector translatedPos = m_GameScene.getGrid().translateWP2Idx(m_Position);
+        fill(0, 0, 255);
+        circle(translatedPos.x, translatedPos.y, 25);
 
         // Get a vector to every cell type in a radius of m_SeachRadius
-        ArrayList<Tuple<CellType, ZVector>> neigbours = m_GameScene.getGrid().getNeighbourLocations((int) translatedPos.x, (int) translatedPos.y, m_SeachRadius);
+        ArrayList<Tuple<CellType, ZVector>> neighbours = m_GameScene.getGrid().getNeighbourLocations((int) translatedPos.x, (int) translatedPos.y, m_SeachRadius);
+
         ArrayList<ZVector> apples = new ArrayList<ZVector>();
 
         // Filter for all the apples
-        for (int i = 0; i < neigbours.size(); i++)
+        for (int i = 0; i < neighbours.size(); i++)
         {
-            if (neigbours.get(i).x == CellType.APPLE)
-                apples.add(neigbours.get(i).y);
+            if (neighbours.get(i).x == CellType.APPLE)
+                apples.add(neighbours.get(i).y);
         }
 
-        // Find the dir vector towards closest apple
-        ZVector appleIdxPos = ZVector.getShortest(apples);
-        ZVector applePos = new ZVector();
-        
-        if (appleIdxPos != null)
+        // Translate all apple positions from idx space to WS positions
+        ArrayList<ZVector> translatedAppleWSPos = new ArrayList<ZVector>();
+
+        for (int i = 0; i < apples.size(); i++)
         {
-            applePos = m_GameScene.getGrid().getWPCenterOfCell(m_GameScene.getGrid().translateIdx2WP(appleIdxPos));
+            ZVector appleIdxPos = apples.get(i);
+            ZVector appleWSPos = m_GameScene.getGrid().getWPCenterOfCell(m_GameScene.getGrid().translateIdx2WP(appleIdxPos));
+
+            translatedAppleWSPos.add(appleWSPos);
+
+            line(m_Position.x, m_Position.y, appleWSPos.x, appleWSPos.y);
+            circle(appleWSPos.x, appleWSPos.y, 15);
+        }
+
+        // Find the shortest path to an apple
+        ZVector applePos = ZVector.getClosest(m_Position, translatedAppleWSPos);
+
+        if (applePos != null)
+        {
             m_State = PreyState.CHASE_FOOD;
         }
         else

@@ -7,7 +7,7 @@ public class Scene
     private float m_ScreenWrappingEpsilon = 1f;
     private boolean m_SimStarted = false; // true after init() is called (the sim is started)
     private int m_AnimalsInScene = 0;
-    private int m_MaxAnimalsInScene = 15;
+    private int m_MaxAnimalsInScene = 1;
     private float m_UpdateTime = 0f;
     private float m_DisplayTime = 0f;
 
