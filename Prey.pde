@@ -9,8 +9,8 @@ public class Prey extends Animal
     private float m_SplitCooldown = 10f; // Minimum time before it can split again
     private float m_TimeSinceSplit = 0f; 
     private int m_SeachRadius = 4;
-    private boolean m_ShowChaseFoodInfo = true;
-    private boolean m_ShowSearchRadius = true;
+    private boolean m_ShowChaseFoodInfo = false;
+    private boolean m_ShowSearchRadius = false;
 
     public PreyState getState() { return m_State; }
     public float getNutrition() { return m_Nutrition; }
