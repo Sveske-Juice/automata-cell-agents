@@ -5,13 +5,16 @@ public class Scene
     private ArrayList<Animal> m_Animals = new ArrayList<Animal>();
     private ArrayList<Animal> m_Animals2Destroy = new ArrayList<Animal>();
     private float m_ScreenWrappingEpsilon = 1f;
+    private boolean m_SimStarted = false; // true after init() is called (the sim is started)
+    private int m_AnimalsInScene = 0;
+    private int m_MaxAnimalsInScene = 10;
 
     public CellGrid getGrid() { return m_Grid; }
 
     public Scene(CellGrid grid)
     {
         m_Grid = grid;
-        m_Animals.add(new Prey("prey test"));
+        addAnimal(new Prey("prey test"));
         init();
     }
 
@@ -22,6 +25,8 @@ public class Scene
             m_Animals.get(i).SetGameScene(this);
             m_Animals.get(i).setup();
         }
+
+        m_SimStarted = true;
     }
 
     public void update()
@@ -87,6 +92,7 @@ public class Scene
     public void DestroyAnimal(Animal animal)
     {
         m_Animals2Destroy.add(animal); // add animal to destruction queue
+        m_AnimalsInScene--;
     }
 
     // Does a simple point overlap to see if any animals are at (xPos, yPos)
@@ -120,5 +126,20 @@ public class Scene
             return false;
         
         return true;
+    }
+
+    public void addAnimal(Animal animal)
+    {
+        if (m_AnimalsInScene >= m_MaxAnimalsInScene)
+            return;
+
+        m_Animals.add(animal);
+        m_AnimalsInScene++;
+
+        if (m_SimStarted)
+        {
+            animal.SetGameScene(this);
+            animal.setup();
+        }
     }
 }

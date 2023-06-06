@@ -5,6 +5,9 @@ public class Prey extends Animal
     private float m_NutritionMax = 100f;
     private float m_NutritionGainFromApple = 40f;
     private float m_NutritionLossPrSecond = 2f;
+    private float m_SplitNutritionPercent = 0.75f; // How much percent of nutrition does the prey need to have before it can split
+    private float m_SplitCooldown = 10f; // Minimum time before it can split again
+    private float m_TimeSinceSplit = 0f; 
     private int m_SeachRadius = 4;
     private boolean m_ShowChaseFoodInfo = true;
     private boolean m_ShowSearchRadius = true;
@@ -50,6 +53,8 @@ public class Prey extends Animal
     public void update()
     {
         super.update();
+
+        handleSplitting();
 
         ZVector translatedPos = m_GameScene.getGrid().translateWP2Idx(m_Position);
 
@@ -134,5 +139,26 @@ public class Prey extends Animal
         m_Nutrition += amt;
         if (m_Nutrition > m_NutritionMax)
             m_Nutrition = m_NutritionMax;
+    }
+
+    private void handleSplitting()
+    {
+        m_TimeSinceSplit += Time.dt();
+        if (!canSplit())
+            return;
+
+        m_TimeSinceSplit = 0f;
+        m_GameScene.addAnimal(new Prey("child of " + getName()));
+    }
+
+    private boolean canSplit()
+    {
+        if (m_TimeSinceSplit < m_SplitCooldown)
+            return false;
+
+        if (m_Nutrition / m_NutritionMax < m_SplitNutritionPercent)
+            return false;
+
+        return true;
     }
 }
