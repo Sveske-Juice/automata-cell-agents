@@ -18,11 +18,6 @@ void setup()
     m_Seed = int(random(0, Integer.MAX_VALUE));
 
   randomSeed(m_Seed);
-
-  ArrayList<ZVector> test = new ArrayList<ZVector>();
-  test.add(new ZVector(5, 5));
-  test.add(new ZVector(-1, 2));
-  println(ZVector.getShortest(test));
 }
 
 void draw()

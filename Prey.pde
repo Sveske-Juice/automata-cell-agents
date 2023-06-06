@@ -63,7 +63,7 @@ public class Prey extends Animal
 
         handleSplitting();
 
-        ZVector translatedPos = m_GameScene.getGrid().translateWP2Idx(m_Position);
+        ZVector translatedPos = m_GameScene.getGrid().translateWS2Idx(m_Position);
         fill(0, 0, 255);
         circle(translatedPos.x, translatedPos.y, 25);
 
@@ -85,7 +85,7 @@ public class Prey extends Animal
         for (int i = 0; i < apples.size(); i++)
         {
             ZVector appleIdxPos = apples.get(i);
-            ZVector appleWSPos = m_GameScene.getGrid().getWPCenterOfCell(m_GameScene.getGrid().translateIdx2WP(appleIdxPos));
+            ZVector appleWSPos = m_GameScene.getGrid().getWSCenterOfCell(m_GameScene.getGrid().translateIdx2WS(appleIdxPos));
 
             translatedAppleWSPos.add(appleWSPos);
 

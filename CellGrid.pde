@@ -55,20 +55,20 @@ class CellGrid {
   }
 
   // Translates world/pixel position to index into the cell grid
-  public ZVector translateWP2Idx(ZVector WP)
+  public ZVector translateWS2Idx(ZVector WP)
   {
     return new ZVector((int) WP.y / m_CellPxSize, (int) WP.x / m_CellPxSize);
   }
 
-  // Translates idx postiion to world/pixel position. inverse of translateWP2Idx.
-  public ZVector translateIdx2WP(ZVector Idx)
+  // Translates idx postiion to world/pixel position. inverse of translateWS2Idx.
+  public ZVector translateIdx2WS(ZVector Idx)
   {
     return new ZVector(Idx.y * m_CellPxSize, Idx.x * m_CellPxSize);
   }
 
-  public ZVector getWPCenterOfCell(ZVector cellWPPosition)
+  public ZVector getWSCenterOfCell(ZVector cellWPSosition)
   {
-    return cellWPPosition.add(new ZVector(m_CellPxSize / 2, m_CellPxSize / 2));
+    return cellWPSosition.add(new ZVector(m_CellPxSize / 2, m_CellPxSize / 2));
   }
 
   float getGenTime() { return m_GenerationTime; }
