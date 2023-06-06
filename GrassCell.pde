@@ -24,13 +24,13 @@ public class GrassCell extends Cell
         Integer grassQuantity = neighbours.get(CellType.GRASS);
         if (grassQuantity != null)
         {
-            if (grassQuantity > 7)
+            if (grassQuantity > 6)
             {
-                return int(random(0, 2500)) == 0 ? new AppleCell() : null;
+                return int(random(0, 1500)) == 0 ? new AppleCell() : null;
             }
         }
 
-        if (m_LifeTime > 500)
+        if (m_LifeTime > 1000)
         {
             Integer waterQuantity = neighbours.get(CellType.WATER);
             if (waterQuantity == null) // Slowly turn to dry grass if no water source nearby

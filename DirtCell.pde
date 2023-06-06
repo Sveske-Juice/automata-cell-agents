@@ -15,7 +15,7 @@ public class DirtCell extends Cell
         Integer grassQuantity = neighbours.get(CellType.GRASS);
         if (grassQuantity != null)
         {
-            return int(random(0, 250)) == 0 ? new GrassCell() : null;
+            return int(random(0, 150)) == 0 ? new GrassCell() : null;
         }
 
         Integer waterQuantity = neighbours.get(CellType.WATER);

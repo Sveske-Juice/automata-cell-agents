@@ -20,9 +20,9 @@ public class AshCell extends Cell
                 return new ObsidianCell();
         }
 
-        if (m_LifeTime > 1000)
+        if (m_LifeTime > 500)
         {
-            return int(random(0, 1000)) == 0 ? new DirtCell() : null;
+            return int(random(0, 750)) == 0 ? new DirtCell() : null;
         }
 
         return null;

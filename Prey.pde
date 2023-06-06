@@ -8,6 +8,7 @@ public class Prey extends Animal
     private float m_SplitNutritionPercent = 0.75f; // How much percent of nutrition does the prey need to have before it can split
     private float m_SplitCooldown = 8f; // Minimum time before it can split again
     private float m_TimeSinceSplit = 0f; 
+    private float m_ChaseFoodSpeed = 15f; 
     private int m_SeachRadius = 4;
     private boolean m_ShowChaseFoodInfo = false;
     private boolean m_ShowSearchRadius = false;
@@ -111,6 +112,7 @@ public class Prey extends Animal
                 if (m_ShowChaseFoodInfo)
                     line(m_Position.x, m_Position.y, applePos.x, applePos.y);
     
+                m_CurrentMovementSpeed = m_ChaseFoodSpeed;
                 seek(applePos);
                 break;
 
