@@ -74,6 +74,7 @@ class CellGrid {
   float getGenTime() { return m_GenerationTime; }
   float getDrawTime() { return m_DrawTime; }
   int getGenCount() { return m_GenerationCount; }
+  int getCellSize() { return m_CellPxSize; }
 
   void init()
   {

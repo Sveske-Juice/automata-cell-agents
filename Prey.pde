@@ -5,8 +5,13 @@ public class Prey extends Animal
     private float m_NutritionMax = 100f;
     private float m_NutritionGainFromApple = 40f;
     private float m_NutritionLossPrSecond = 2f;
-    private int m_SeachRadius = 5;
+    private int m_SeachRadius = 4;
     private boolean m_ShowChaseFoodInfo = true;
+    private boolean m_ShowSearchRadius = true;
+
+    public PreyState getState() { return m_State; }
+    public float getNutrition() { return m_Nutrition; }
+    public float getMaxNutrition() { return m_NutritionMax; }
 
     public Prey(String name)
     {
@@ -21,6 +26,24 @@ public class Prey extends Animal
         m_Sprite = loadShape("prey.svg");
 
         m_HalfExtents = new ZVector(m_Sprite.width, m_Sprite.height);
+    }
+
+    @Override
+    public void enableDebug()
+    {
+      super.enableDebug();
+
+      m_ShowSearchRadius = true;
+      m_ShowChaseFoodInfo = true;
+    }
+
+    @Override
+    public void disableDebug()
+    {
+      super.disableDebug();
+
+      m_ShowSearchRadius = false;
+      m_ShowChaseFoodInfo = false;
     }
 
     @Override
@@ -64,6 +87,12 @@ public class Prey extends Animal
                 addNutrition(m_NutritionGainFromApple);
                 m_Scene.getGrid().setCellAt(new GrassCell(), (int) getCenter().x, (int) getCenter().y);
             }
+        }
+
+        if (m_ShowSearchRadius)
+        {
+            fill(0, 0, 0, 100);
+            circle(m_Position.x, m_Position.y, m_SeachRadius*2*m_GameScene.getGrid().getCellSize());
         }
 
         switch (m_State)

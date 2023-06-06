@@ -13,7 +13,8 @@ public abstract class Animal implements IObjectWithBounds
     protected float m_WanderAngleChange = 0.5f; // How many radians the angle wander angle can change every wander call
     protected float m_WanderAngle = 0f; // Determines a new position to wander towards together with the current pos
     protected float m_WanderDirectionExtend = 100f; // How much of the animal's direction (v) will be extended when wandering
-    protected boolean m_ShowWandererInfo = true;
+    protected boolean m_ShowWandererInfo = false;
+    protected boolean m_Debug = false;
 
     protected ZVector m_Position = new ZVector(width / 2, height / 2);
     protected float m_Rotation = 0f;
@@ -35,6 +36,7 @@ public abstract class Animal implements IObjectWithBounds
     public ZVector GetPosition() { return m_Position; }
     public String getName() { return m_Name; }
     public float getHealth() { return m_Health; }
+    public float getMass() { return m_Mass; }
 
     public void SetPostion(ZVector pos) { m_Position = pos; }
     public void SetCellStandingOn(Cell cell) { m_StandingOnCell = cell; }
@@ -65,6 +67,19 @@ public abstract class Animal implements IObjectWithBounds
                 m_CurrentIFrameDuration = 0f;
             }
         }
+
+    }
+
+    public void enableDebug()
+    {
+        m_Debug = true;
+        m_ShowWandererInfo = true;
+    }
+
+    public void disableDebug()
+    {
+        m_Debug = false;
+        m_ShowWandererInfo = false;
     }
 
     public void display()
@@ -82,6 +97,11 @@ public abstract class Animal implements IObjectWithBounds
             shape(m_DamageEffect);
 
         popMatrix();
+
+        if (m_Debug)
+        {
+            disableDebug();
+        }
     }
 
     /*

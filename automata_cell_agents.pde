@@ -143,8 +143,10 @@ void showCellInfo(Cell hoveringCell)
 
 void showAnimalInfo(Animal hoveringAnimal)
 {
+  hoveringAnimal.enableDebug();
   String animalName = hoveringAnimal.getName();
   float animalHealth = hoveringAnimal.getHealth();
+  float animalWeight = hoveringAnimal.getMass();
 
   // Create info window
   int elemStep = 25; // padding
@@ -179,6 +181,28 @@ void showAnimalInfo(Animal hoveringAnimal)
   textSize(14);
   text("HP: " + animalHealth, windowXPos, currentElem);
   currentElem += elemStep;
+
+  // mass
+  textSize(14);
+  text("Mass: " + animalWeight + "kg", windowXPos, currentElem);
+  currentElem += elemStep;
+
+  // TODO abstract this
+  // prey specific
+  if (hoveringAnimal instanceof Prey)
+  {
+    Prey prey = (Prey) hoveringAnimal;
+
+    // state
+    textSize(14);
+    text("State: " + prey.getState(), windowXPos, currentElem);
+    currentElem += elemStep;
+
+    // nutrition
+    textSize(14);
+    text("Nutrition: " + prey.getNutrition() + "/" + prey.getMaxNutrition(), windowXPos, currentElem);
+    currentElem += elemStep;
+  }
 }
 
 void showDebugWindow()
