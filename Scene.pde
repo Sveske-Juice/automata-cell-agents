@@ -7,7 +7,7 @@ public class Scene
     private float m_ScreenWrappingEpsilon = 1f;
     private boolean m_SimStarted = false; // true after init() is called (the sim is started)
     private int m_AnimalsInScene = 0;
-    private int m_MaxAnimalsInScene = 1;
+    private int m_MaxAnimalsInScene = 25;
     private float m_UpdateTime = 0f;
     private float m_DisplayTime = 0f;
 
@@ -21,7 +21,8 @@ public class Scene
     public Scene(CellGrid grid)
     {
         m_Grid = grid;
-        addAnimal(new Prey("prey test"));
+        addAnimal(new Prey("Original Prey"));
+        addAnimal(new Predator("Original Predator"));
         init();
     }
 
