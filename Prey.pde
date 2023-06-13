@@ -65,7 +65,6 @@ public class Prey extends Animal
 
         ZVector translatedPos = m_GameScene.getGrid().translateWS2Idx(m_Position);
         fill(0, 0, 255);
-        circle(translatedPos.x, translatedPos.y, 25);
 
         // Get a vector to every cell type in a radius of m_SeachRadius
         ArrayList<Tuple<CellType, ZVector>> neighbours = m_GameScene.getGrid().getNeighbourLocations((int) translatedPos.x, (int) translatedPos.y, m_SeachRadius);
