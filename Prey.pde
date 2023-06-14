@@ -173,7 +173,7 @@ public class Prey extends Animal
             return;
 
         m_TimeSinceSplit = 0f;
-        m_GameScene.addAnimal(new Prey("child of " + getName()));
+        m_GameScene.addAnimal(new Prey("child of " + getName()), m_Position);
     }
 
     private boolean canSplit()

@@ -21,8 +21,8 @@ public class Scene
     public Scene(CellGrid grid)
     {
         m_Grid = grid;
-        addAnimal(new Prey("Original Prey"));
-        addAnimal(new Predator("Original Predator"));
+        addAnimal(new Prey("Original Prey"), new ZVector(random(0, width), random(0, height)));
+        addAnimal(new Predator("Original Predator"), new ZVector(random(0, width), random(0, height)));
         init();
     }
 
@@ -141,13 +141,15 @@ public class Scene
         return true;
     }
 
-    public void addAnimal(Animal animal)
+    public void addAnimal(Animal animal, ZVector pos)
     {
         if (m_AnimalsInScene >= m_MaxAnimalsInScene)
             return;
 
         m_Animals.add(animal);
         m_AnimalsInScene++;
+
+        animal.SetPosition(pos);
 
         if (m_SimStarted)
         {

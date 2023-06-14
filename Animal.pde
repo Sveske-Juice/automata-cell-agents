@@ -34,6 +34,7 @@ public abstract class Animal implements IObjectWithBounds
     protected Cell m_StandingOnCell;
 
     public ZVector GetPosition() { return m_Position; }
+    public void SetPosition(ZVector pos) { m_Position = pos; }
     public String getName() { return m_Name; }
     public float getHealth() { return m_Health; }
     public float getMass() { return m_Mass; }
