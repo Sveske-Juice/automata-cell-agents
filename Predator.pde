@@ -3,7 +3,7 @@ public class Predator extends Animal
   private PredatorState m_State = PredatorState.WANDER;
   private float m_HuntMovementSpeed = 20f;
   private Prey m_TargetedPrey;
-  private float m_HuntRadius = 25f;
+  private float m_HuntRadius = 150;
 
   private boolean m_ShowHuntRadius = false;
 
