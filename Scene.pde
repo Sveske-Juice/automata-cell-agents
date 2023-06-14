@@ -155,4 +155,27 @@ public class Scene
             animal.setup();
         }
     }
+
+    public <T extends Animal> T getClosestAnimalOfType(Class<T> type, ZVector position)
+    {
+      float closestDist = Float.MAX_VALUE;
+      Animal closestAnimal = null;
+      
+      for (int i = 0; i < m_Animals.size(); i++)
+      {
+        float dist = ZVector.sub(m_Animals.get(i).GetPosition(), position).mag();
+        if (dist >= closestDist)
+          continue;
+
+        if (!type.isAssignableFrom(m_Animals.get(i).getClass()))
+          continue;
+
+        closestDist = dist;
+        closestAnimal = m_Animals.get(i);
+      }
+      
+      if (closestAnimal != null)
+        return type.cast(closestAnimal);
+      return null;
+    }
 }
