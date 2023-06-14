@@ -5,9 +5,6 @@ public class Predator extends Animal
   private Prey m_TargetedPrey;
   private float m_HuntRadius = 150;
 
-  private float m_Nutrition;
-  private float m_MaxNutrition = 50;
-  private float m_Metabolism = 1f; // How much nutrition the predator looses every second
   private float m_NutritionBoostPrPrey = 40; // Nutrition gain per eaten prey
 
   private boolean m_ShowHuntRadius = false;
@@ -24,8 +21,11 @@ public class Predator extends Animal
   {
     super.setup();
 
+    m_NutritionMax = 100f;
+    modifyNutrition(m_NutritionMax / 2);
+    m_NutritionLossPrSecond = 1f;
+
     m_Sprite = loadShape("predator.svg");
-    setNutrition(m_MaxNutrition / 2); // Default to half
   }
 
   @Override
@@ -34,7 +34,6 @@ public class Predator extends Animal
     super.update();
 
     checkForHunt();
-    setNutrition(-m_Metabolism * Time.dt());
 
     switch (m_State)
     {
@@ -59,7 +58,6 @@ public class Predator extends Animal
 
     m_ShowHuntRadius = true;
   }
-
 
   @Override
   public void disableDebug()
@@ -99,13 +97,6 @@ public class Predator extends Animal
     m_TargetedPrey = closest;
   }
 
-  private void setNutrition(float amt)
-  {
-    m_Nutrition += amt;
-
-    if (m_Nutrition <= 0f)
-      m_GameScene.DestroyAnimal(this);
-  }
 
   private void tryEatPrey(Prey prey)
   {
@@ -114,6 +105,6 @@ public class Predator extends Animal
       return;
 
     m_GameScene.DestroyAnimal(prey);
-    setNutrition(m_NutritionBoostPrPrey);
+    modifyNutrition(m_NutritionBoostPrPrey);
   }
 }

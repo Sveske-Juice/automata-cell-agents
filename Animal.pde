@@ -33,11 +33,17 @@ public abstract class Animal implements IObjectWithBounds
 
     protected Cell m_StandingOnCell;
 
+    protected float m_Nutrition;
+    protected float m_NutritionMax;
+    protected float m_NutritionLossPrSecond;
+
     public ZVector GetPosition() { return m_Position; }
     public void SetPosition(ZVector pos) { m_Position = pos; }
     public String getName() { return m_Name; }
     public float getHealth() { return m_Health; }
     public float getMass() { return m_Mass; }
+    public float getNutrition() { return m_Nutrition; }
+    public float getMaxNutrition() { return m_NutritionMax; }
 
     public void SetPostion(ZVector pos) { m_Position = pos; }
     public void SetCellStandingOn(Cell cell) { m_StandingOnCell = cell; }
@@ -51,6 +57,8 @@ public abstract class Animal implements IObjectWithBounds
 
     public void update()
     {
+        modifyNutrition(-m_NutritionLossPrSecond * Time.dt());
+
         // Point animal towards front of movement
         m_Rotation = m_Velocity.copy().normalize().angle();
 
@@ -174,4 +182,16 @@ public abstract class Animal implements IObjectWithBounds
 
         m_HasIFrame = true;
     }
+
+    
+  protected void modifyNutrition(float amt)
+  {
+    m_Nutrition += amt;
+
+    if (m_Nutrition <= 0f)
+      m_GameScene.DestroyAnimal(this);
+
+    if (m_Nutrition >= m_NutritionMax)
+      m_Nutrition = m_NutritionMax;
+  }
 }
