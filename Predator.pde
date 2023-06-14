@@ -91,7 +91,10 @@ public class Predator extends Animal
 
     // Validate that closest prey is within hunt radius
     if (ZVector.sub(closest.GetPosition(), m_Position).mag() > m_HuntRadius)
+    {
+      m_State = PredatorState.WANDER;
       return;
+    }
 
     m_State = PredatorState.HUNT;
     m_TargetedPrey = closest;
