@@ -8,6 +8,7 @@ public class Predator extends Animal
   private float m_NutritionBoostPrPrey = 40; // Nutrition gain per eaten prey
 
   private boolean m_ShowHuntRadius = false;
+  private boolean m_ShowTargetedPrey = false;
 
   public PredatorState getState() { return m_State; }
 
@@ -57,6 +58,7 @@ public class Predator extends Animal
     super.enableDebug();
 
     m_ShowHuntRadius = true;
+    m_ShowTargetedPrey = true;
   }
 
   @Override
@@ -65,6 +67,7 @@ public class Predator extends Animal
     super.disableDebug();
 
     m_ShowHuntRadius = false;
+    m_ShowTargetedPrey = false;
   }
 
   @Override
@@ -98,6 +101,13 @@ public class Predator extends Animal
 
     m_State = PredatorState.HUNT;
     m_TargetedPrey = closest;
+
+    if (closest != null && m_ShowTargetedPrey)
+    {
+      fill(255, 0, 0);
+      stroke(2);
+      line(m_Position.x, m_Position.y, m_TargetedPrey.GetPosition().x, m_TargetedPrey.GetPosition().y);
+    }
   }
 
 
