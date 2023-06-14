@@ -1,6 +1,9 @@
 public class Predator extends Animal
 {
   private PredatorState m_State = PredatorState.WANDER;
+  private float m_HuntMovementSpeed = 20f;
+  private Prey m_TargetedPrey;
+  private float m_HuntRadius = 25f;
 
   public PredatorState getState() { return m_State; }
 
@@ -22,12 +25,20 @@ public class Predator extends Animal
   {
     super.update();
 
+    checkForHunt();
+
     switch (m_State)
     {
       case WANDER:
         m_CurrentMovementSpeed = m_WanderMovementSpeed;
         wander();
         break;
+
+      case HUNT:
+        m_CurrentMovementSpeed = m_HuntMovementSpeed;
+        seek(m_TargetedPrey.GetPosition());
+        break;
+
     }
   }
 
@@ -36,4 +47,22 @@ public class Predator extends Animal
 
   @Override
   public ZVector getHalfExtents() { return new ZVector(50, 20); }
+
+  private void checkForHunt()
+  {
+    // Check if a prey is nearby and if so, switch state to HUNT
+    Prey closest = m_Scene.getClosestAnimalOfType(Prey.class, m_Position);
+    if (closest == null)
+    {
+      m_State = PredatorState.WANDER;
+      return;
+    }
+
+    // Validate that closest prey is within hunt radius
+    if (ZVector.sub(closest.GetPosition(), m_Position).mag() > m_HuntRadius)
+      return;
+
+    m_State = PredatorState.HUNT;
+    m_TargetedPrey = closest;
+  }
 }

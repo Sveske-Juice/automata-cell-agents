@@ -1,5 +1,5 @@
 public enum PredatorState
 {
   WANDER,
-  CHASE,
+  HUNT,
 }
