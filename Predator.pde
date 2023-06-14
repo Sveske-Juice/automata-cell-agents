@@ -5,6 +5,10 @@ public class Predator extends Animal
   private Prey m_TargetedPrey;
   private float m_HuntRadius = 150;
 
+  private float m_Nutrition;
+  private float m_MaxNutrition = 50;
+  private float m_Metabolism = 2.5f; // How much nutrition the predator looses every second
+
   private boolean m_ShowHuntRadius = false;
 
   public PredatorState getState() { return m_State; }
@@ -20,6 +24,7 @@ public class Predator extends Animal
     super.setup();
 
     m_Sprite = loadShape("predator.svg");
+    setNutrition(m_MaxNutrition / 2);
   }
 
   @Override
@@ -28,6 +33,7 @@ public class Predator extends Animal
     super.update();
 
     checkForHunt();
+    setNutrition(-m_Metabolism * Time.dt());
 
     switch (m_State)
     {
@@ -76,7 +82,7 @@ public class Predator extends Animal
     }
 
     // Check if a prey is nearby and if so, switch state to HUNT
-    Prey closest = m_Scene.getClosestAnimalOfType(Prey.class, m_Position);
+    Prey closest = m_GameScene.getClosestAnimalOfType(Prey.class, m_Position);
     if (closest == null)
     {
       m_State = PredatorState.WANDER;
@@ -89,5 +95,13 @@ public class Predator extends Animal
 
     m_State = PredatorState.HUNT;
     m_TargetedPrey = closest;
+  }
+
+  private void setNutrition(float amt)
+  {
+    m_Nutrition += amt;
+
+    if (m_Nutrition <= 0f)
+      m_GameScene.DestroyAnimal(this);
   }
 }
