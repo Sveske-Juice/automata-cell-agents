@@ -37,6 +37,10 @@ public abstract class Animal implements IObjectWithBounds
     protected float m_NutritionMax;
     protected float m_NutritionLossPrSecond;
 
+    protected float m_SplitNutritionPercent; // How much percent of nutrition does the prey need to have before it can split
+    protected float m_SplitCooldown; // Minimum time before it can split again
+    protected float m_TimeSinceSplit = 0f;
+
     public ZVector GetPosition() { return m_Position; }
     public void SetPosition(ZVector pos) { m_Position = pos; }
     public String getName() { return m_Name; }
@@ -58,6 +62,11 @@ public abstract class Animal implements IObjectWithBounds
     public void update()
     {
         modifyNutrition(-m_NutritionLossPrSecond * Time.dt());
+
+        m_TimeSinceSplit += Time.dt();
+        if (canSplit() == true) {
+          handleSplitting();
+        }
 
         // Point animal towards front of movement
         m_Rotation = m_Velocity.copy().normalize().angle();
@@ -194,4 +203,17 @@ public abstract class Animal implements IObjectWithBounds
     if (m_Nutrition >= m_NutritionMax)
       m_Nutrition = m_NutritionMax;
   }
+
+  protected boolean canSplit()
+  {
+    if (m_TimeSinceSplit < m_SplitCooldown)
+      return false;
+
+    if (m_Nutrition / m_NutritionMax < m_SplitNutritionPercent)
+      return false;
+
+    return true;
+  }
+
+  protected abstract void handleSplitting();
 }

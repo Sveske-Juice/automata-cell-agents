@@ -6,6 +6,7 @@ public class Predator extends Animal
   private float m_HuntRadius = 150;
 
   private float m_NutritionBoostPrPrey = 40; // Nutrition gain per eaten prey
+  private float m_NutritionForSplit = 0.8; // Percentage nutrition required for split
 
   private boolean m_ShowHuntRadius = false;
   private boolean m_ShowTargetedPrey = false;
@@ -25,6 +26,9 @@ public class Predator extends Animal
     m_NutritionMax = 100f;
     modifyNutrition(m_NutritionMax / 2);
     m_NutritionLossPrSecond = 1f;
+
+    m_SplitNutritionPercent = 0.6f;
+    m_SplitCooldown = 10f;
 
     m_Sprite = loadShape("predator.svg");
   }
@@ -110,7 +114,6 @@ public class Predator extends Animal
     }
   }
 
-
   private void tryEatPrey(Prey prey)
   {
     // If the predator and the prey are colliding then eat the prey
@@ -119,5 +122,12 @@ public class Predator extends Animal
 
     m_GameScene.DestroyAnimal(prey);
     modifyNutrition(m_NutritionBoostPrPrey);
+  }
+
+  @Override
+  protected void handleSplitting()
+  {
+    m_TimeSinceSplit = 0f;
+    m_GameScene.addAnimal(new Predator("child of " + getName()), m_Position);
   }
 }
