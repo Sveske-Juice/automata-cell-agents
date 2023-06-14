@@ -1,5 +1,5 @@
-CellGrid m_Grid;
-Scene m_Scene;
+CellGrid grid;
+Scene scene;
 boolean m_Paused = false;
 boolean m_MouseInWin = true;
 boolean m_ShowDebugWin = true;
@@ -11,8 +11,8 @@ void setup()
 {
   size(990, 1000);
   // frameRate(500);
-  m_Grid = new CellGrid();
-  m_Scene = new Scene(m_Grid);
+  grid = new CellGrid();
+  scene = new Scene(grid);
 
   if (m_Seed < 0)
     m_Seed = int(random(0, Integer.MAX_VALUE));
@@ -33,13 +33,13 @@ void draw()
 
 
   // After grid is generated display grid
-  m_Grid.display();
+  grid.display();
 
   /* SCENE LOOP. */
   sceneLoop();
 
   // Display animals on top of grid
-  m_Scene.display();
+  scene.display();
 
   // Show debug window
   if (m_ShowDebugWin)
@@ -55,12 +55,12 @@ void gridLoop()
     return;
   
   
-  int currentSimGen = 0; // How many times the m_Grid have been generated this frame
+  int currentSimGen = 0; // How many times the grid have been generated this frame
   m_GenerationTime = 0f;
   do {
-    // Generate new m_Grid
-    m_Grid.generate();
-    m_GenerationTime += m_Grid.getGenTime();
+    // Generate new grid
+    grid.generate();
+    m_GenerationTime += grid.getGenTime();
 
   } while (++currentSimGen < m_SimSpeed); // Generate x number of generations this frame depending on the m_SimSpeed
 }
@@ -70,10 +70,10 @@ void sceneLoop()
   if (m_Paused)
     return;
   
-  int currentSimGen = 0; // How many times the m_Grid have been generated this frame
+  int currentSimGen = 0; // How many times the grid have been generated this frame
   do {
     // Update m_Animals
-    m_Scene.update();
+    scene.update();
   } while (++currentSimGen < m_SimSpeed); // Generate x number of generations this frame depending on the m_SimSpeed 
 }
 
@@ -83,10 +83,10 @@ void showHoverInfo()
     return;
   
   // Get current hovering cell
-  Cell hoveringCell = m_Grid.getCellAt(mouseX, mouseY);
+  Cell hoveringCell = grid.getCellAt(mouseX, mouseY);
   
   // Get current hovering animal
-  Animal hoveringAnimal = m_Scene.getAnimalAt(mouseX, mouseY);
+  Animal hoveringAnimal = scene.getAnimalAt(mouseX, mouseY);
 
   // TODO improvement could be to abstract everything that info can be showed about into an interface
 
@@ -233,8 +233,8 @@ void showDebugWindow()
 
   // data
   float frameTime = Time.dt();
-  float drawTime = m_Grid.getDrawTime();
-  int genCnt = m_Grid.getGenCount();
+  float drawTime = grid.getDrawTime();
+  int genCnt = grid.getGenCount();
 
   // settings
   fill(255);
@@ -254,11 +254,11 @@ void showDebugWindow()
   currentElem += elemStep;
 
   // scene update time
-  text("Scene tick time: " + m_Scene.GetUpdateTime() / 1000 + "s", windowXPos, currentElem);
+  text("Scene tick time: " + scene.GetUpdateTime() / 1000 + "s", windowXPos, currentElem);
   currentElem += elemStep;
 
   // scene draw time 
-  text("Scene draw time: " + m_Scene.GetDisplayTime() / 1000 + "s", windowXPos, currentElem);
+  text("Scene draw time: " + scene.GetDisplayTime() / 1000 + "s", windowXPos, currentElem);
   currentElem += elemStep;
 
   // simulation speed
@@ -274,7 +274,7 @@ void showDebugWindow()
   currentElem += elemStep;
 
   // animals in scene / max animals
-  text("Animals in scene: " + m_Scene.GetAnimalsInScene() + " / " + m_Scene.GetMaxAnimalsInScene(), windowXPos, currentElem);
+  text("Animals in scene: " + scene.GetAnimalsInScene() + " / " + scene.GetMaxAnimalsInScene(), windowXPos, currentElem);
   currentElem += elemStep;
   
 
@@ -303,8 +303,8 @@ void keyPressed()
   // Single step on space down and while its m_Paused
   if (key == 32 && m_Paused)
   {
-    m_Grid.singleStep();
-    m_Scene.update();
+    grid.singleStep();
+    scene.update();
   }
   else if (key == 'i')
     m_ShowDebugWin = !m_ShowDebugWin;

@@ -6,7 +6,6 @@ public class Predator extends Animal
   private float m_HuntRadius = 150;
 
   private float m_NutritionBoostPrPrey = 40; // Nutrition gain per eaten prey
-  private float m_NutritionForSplit = 0.8; // Percentage nutrition required for split
 
   private boolean m_ShowHuntRadius = false;
   private boolean m_ShowTargetedPrey = false;
@@ -130,4 +129,5 @@ public class Predator extends Animal
     m_TimeSinceSplit = 0f;
     m_GameScene.addAnimal(new Predator("child of " + getName()), m_Position);
   }
+  private float m_NutritionForSplit = 0.8; // Percentage nutrition required for split
 }

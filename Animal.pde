@@ -4,7 +4,6 @@ public abstract class Animal implements IObjectWithBounds
     protected String m_Name;
     protected PShape m_Sprite;
     protected PShape m_DamageEffect;
-    protected float m_SpeedMultiplier = 1f;
     protected float m_CurrentMovementSpeed;
     protected float m_ControlMovementSpeed = 4f;
     protected float m_MaxSpeed = 75f;
@@ -49,7 +48,6 @@ public abstract class Animal implements IObjectWithBounds
     public float getNutrition() { return m_Nutrition; }
     public float getMaxNutrition() { return m_NutritionMax; }
 
-    public void SetPostion(ZVector pos) { m_Position = pos; }
     public void SetCellStandingOn(Cell cell) { m_StandingOnCell = cell; }
     public void SetGameScene(Scene scene) { m_GameScene = scene; }
 
@@ -161,7 +159,7 @@ public abstract class Animal implements IObjectWithBounds
         ZVector force = ZVector.sub(pos, m_Position).normalize().mult(m_CurrentMovementSpeed);
         addForce(force);
         
-        move();
+        applyMovement();
     }
 
     protected void addForce(ZVector force)
@@ -169,7 +167,7 @@ public abstract class Animal implements IObjectWithBounds
         m_Acceleration = ZVector.add(m_Acceleration, force.div(m_Mass));
     }
 
-    protected void move()
+    protected void applyMovement()
     {
         m_Velocity = ZVector.add(m_Velocity, m_Acceleration);
         m_Velocity.limit(m_MaxSpeed);

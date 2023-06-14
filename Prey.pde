@@ -111,7 +111,7 @@ public class Prey extends Animal
             if (m_StandingOnCell.getCellType() == CellType.APPLE)
             {
                 modifyNutrition(m_NutritionGainFromApple);
-                m_Scene.getGrid().setCellAt(new GrassCell(), (int) getCenter().x, (int) getCenter().y);
+                m_GameScene.getGrid().setCellAt(new GrassCell(), (int) getCenter().x, (int) getCenter().y);
             }
         }
 

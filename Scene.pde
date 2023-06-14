@@ -81,23 +81,23 @@ public class Scene
             // top side
             if (center.y - halfExtents.y < 0f)
             {
-                animal.SetPostion(new ZVector(center.x, height - halfExtents.y - m_ScreenWrappingEpsilon));
+                animal.SetPosition(new ZVector(center.x, height - halfExtents.y - m_ScreenWrappingEpsilon));
             }
             // bottom side
             else if (center.y + halfExtents.y > height)
             {
-                animal.SetPostion(new ZVector(center.x, halfExtents.y + m_ScreenWrappingEpsilon));
+                animal.SetPosition(new ZVector(center.x, halfExtents.y + m_ScreenWrappingEpsilon));
             }
 
             // right side
             if (center.x - halfExtents.x < 0f)
             {
-                animal.SetPostion(new ZVector(width - halfExtents.x - m_ScreenWrappingEpsilon, center.y));
+                animal.SetPosition(new ZVector(width - halfExtents.x - m_ScreenWrappingEpsilon, center.y));
             }
             // left side
             else if (center.x + halfExtents.x > width)
             {
-                animal.SetPostion(new ZVector(halfExtents.x + m_ScreenWrappingEpsilon, center.y));
+                animal.SetPosition(new ZVector(halfExtents.x + m_ScreenWrappingEpsilon, center.y));
             }
         }
     }
