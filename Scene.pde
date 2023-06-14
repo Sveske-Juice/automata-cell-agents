@@ -141,6 +141,17 @@ public class Scene
         return true;
     }
 
+    // AABB vs AABB
+    public boolean AABBvsAABB(IObjectWithBounds aabb1, IObjectWithBounds aabb2)
+    {
+      ZVector rangePos = aabb2.getCenter();
+      ZVector rangeSize = aabb2.getHalfExtents();
+      return !( aabb1.getCenter().x > rangePos.x + rangeSize.x || 
+            aabb1.getCenter().x + aabb1.getHalfExtents().x < rangePos.x ||
+            aabb1.getCenter().y > rangePos.y + rangeSize.y ||
+            aabb1.getCenter().y + aabb1.getHalfExtents().y < rangePos.y);
+    }
+
     public void addAnimal(Animal animal, ZVector pos)
     {
         if (m_AnimalsInScene >= m_MaxAnimalsInScene)
