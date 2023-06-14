@@ -5,6 +5,8 @@ public class Predator extends Animal
   private Prey m_TargetedPrey;
   private float m_HuntRadius = 25f;
 
+  private boolean m_ShowHuntRadius = false;
+
   public PredatorState getState() { return m_State; }
 
   public Predator(String name)
@@ -43,6 +45,23 @@ public class Predator extends Animal
   }
 
   @Override
+  public void enableDebug()
+  {
+    super.enableDebug();
+
+    m_ShowHuntRadius = true;
+  }
+
+
+  @Override
+  public void disableDebug()
+  {
+    super.disableDebug();
+
+    m_ShowHuntRadius = false;
+  }
+
+  @Override
   public ZVector getCenter() { return m_Position; }
 
   @Override
@@ -50,6 +69,12 @@ public class Predator extends Animal
 
   private void checkForHunt()
   {
+    if (m_ShowHuntRadius)
+    {
+      fill(0, 0, 0, 100);
+      circle(m_Position.x, m_Position.y, m_HuntRadius*2);
+    }
+
     // Check if a prey is nearby and if so, switch state to HUNT
     Prey closest = m_Scene.getClosestAnimalOfType(Prey.class, m_Position);
     if (closest == null)
