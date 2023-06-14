@@ -186,6 +186,11 @@ void showAnimalInfo(Animal hoveringAnimal)
   textSize(14);
   text("Mass: " + animalWeight + "kg", windowXPos, currentElem);
   currentElem += elemStep;
+  
+  // nutrition
+  textSize(14);
+  text("Nutrition: " + hoveringAnimal.getNutrition() + "/" + hoveringAnimal.getMaxNutrition(), windowXPos, currentElem);
+  currentElem += elemStep;
 
   // TODO abstract this
   // prey specific
@@ -198,10 +203,16 @@ void showAnimalInfo(Animal hoveringAnimal)
     text("State: " + prey.getState(), windowXPos, currentElem);
     currentElem += elemStep;
 
-    // nutrition
+  }
+  if (hoveringAnimal instanceof Predator)
+  {
+    Predator predator = (Predator) hoveringAnimal;
+
+    // state
     textSize(14);
-    text("Nutrition: " + prey.getNutrition() + "/" + prey.getMaxNutrition(), windowXPos, currentElem);
+    text("State: " + predator.getState(), windowXPos, currentElem);
     currentElem += elemStep;
+
   }
 }
 
