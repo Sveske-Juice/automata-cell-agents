@@ -308,6 +308,10 @@ void keyPressed()
   }
   else if (key == 'i')
     m_ShowDebugWin = !m_ShowDebugWin;
+  else if (key == 'p')
+    scene.addAnimal(new Prey("Spawned prey"), new ZVector(random(width), random(height)));
+  else if (key == 'r')
+    scene.addAnimal(new Predator("Spawned predator"), new ZVector(random(width), random(height)));
   else if (keyCode == UP)
     m_SimSpeed++;
   else if (keyCode == DOWN)
